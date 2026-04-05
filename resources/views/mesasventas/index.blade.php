@@ -268,7 +268,7 @@ body.dark-mode .pagination .page-link {
                                                         <button type="submit" 
                                                                 class="btn btn-sm btn-outline-danger"
                                                                 title="Eliminar cantidad"
-                                                                onclick="return confirm('¿Estás seguro de que deseas eliminar esta cantidad?');">
+                                                                onclick="confirmarEliminacion(event, this)">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
@@ -478,6 +478,26 @@ body.dark-mode .pagination .page-link {
 <!-- SweetAlert2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Confirmación elegante para eliminar producto
+    function confirmarEliminacion(event, btn) {
+        event.preventDefault();
+        const form = btn.closest('form');
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas eliminar esta cantidad de productos?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+
     // Validación en tiempo real para inputs de cantidad a eliminar
     document.addEventListener('DOMContentLoaded', function() {
         const inputsEliminar = document.querySelectorAll('input[name="cantidad_eliminar"]');
