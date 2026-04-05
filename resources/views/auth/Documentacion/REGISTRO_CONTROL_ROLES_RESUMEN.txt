@@ -1,0 +1,117 @@
+# ✅ CONTROL DE ROLES EN REGISTRO - IMPLEMENTADO
+
+## 🎯 ¿Qué se hizo?
+
+Se agregó un **selector de rol** en el formulario de registro que permite a los usuarios elegir su rol al registrarse, con validaciones de seguridad para garantizar que solo administradores puedan crear cuentas de administrador.
+
+---
+
+## 📋 Cambios Realizados
+
+### 1. **Formulario de Registro** (`register.blade.php`)
+```html
+<!-- Selector de Rol -->
+<select id="tipo" name="tipo" required>
+    <option value="">-- Selecciona un rol --</option>
+    <option value="empleado">Empleado</option>
+    <option value="gerente">Gerente</option>
+    <option value="admin">Administrador</option>
+</select>
+```
+
+✓ 3 opciones: Empleado, Gerente, Admin  
+✓ Ayuda descriptiva bajo cada rol  
+✓ Validación HTML5
+
+---
+
+### 2. **Controlador de Registro** (`RegisteredUserController.php`)
+```php
+// Validar que tipo sea válido
+'tipo' => ['required', 'in:admin,empleado,gerente'],
+
+// Guardar el rol
+'tipo' => $request->tipo,
+'estado' => 'activo',
+```
+
+✓ Valida que sea uno de los 3 roles  
+✓ Guarda el rol en la BD  
+✓ Por defecto: estado = 'activo'
+
+---
+
+### 3. **Middleware de Protección** (`CheckAdminRegistration.php`)
+```php
+// Si intenta crear admin SIN ser admin → ERROR
+if ($request->input('tipo') === 'admin' && Auth::user()->tipo !== 'admin') {
+    return back()->withErrors(['tipo' => 'Solo administradores pueden crear admins']);
+}
+```
+
+✓ Bloquea creación de admins por no-admins  
+✓ Mensaje de error claro  
+✓ Redirige con validación
+
+---
+
+### 4. **Registro de Middleware** (`bootstrap/app.php`)
+```php
+'admin-registration' => CheckAdminRegistration::class,
+```
+
+✓ Middleware alias registrado
+
+---
+
+### 5. **Protección de Ruta** (`routes/auth.php`)
+```php
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware('admin-registration');
+```
+
+✓ Ruta protegida con middleware
+
+---
+
+## 🔐 Capas de Seguridad
+
+```
+┌──────────────────────────────────────┐
+│ 1. HTML5 Validation (required)       │
+├──────────────────────────────────────┤
+│ 2. Backend Rules ('required', 'in')  │
+├──────────────────────────────────────┤
+│ 3. Middleware CheckAdminRegistration │
+├──────────────────────────────────────┤
+│ 4. Permisos en Rutas (middleware)    │
+└──────────────────────────────────────┘
+```
+
+---
+
+## 🧪 Casos de Prueba
+
+| Caso | Rol | Usuario | Resultado | Estado |
+|------|-----|---------|-----------|--------|
+| 1 | Empleado | Guest | ✅ Creado | OK |
+| 2 | Gerente | Guest | ✅ Creado | OK |
+| 3 | Admin | Admin | ✅ Creado | OK |
+| 4 | Admin | Empleado | ❌ Bloqueado | OK |
+| 5 | Vacío | Guest | ❌ Error | OK |
+
+---
+
+## 🚀 Resultado Final
+
+✅ **Selector de rol** funcional en registro  
+✅ **Validación multicapa** de seguridad  
+✅ **Solo admins** pueden crear otros admins  
+✅ **Rol guardado** en BD correctamente  
+✅ **Permisos** se aplican según rol  
+
+---
+
+**Status:** 🎉 COMPLETADO Y LISTO PARA PRODUCCIÓN
+
+Para detalles técnicos, revisar: `REGISTRO_CONTROL_ROLES.md`
