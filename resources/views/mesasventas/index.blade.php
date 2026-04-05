@@ -475,6 +475,8 @@
 @stop
 
 @section('js')
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Validación en tiempo real para inputs de cantidad a eliminar
     document.addEventListener('DOMContentLoaded', function() {
@@ -515,7 +517,12 @@
         });
 
         if (!hayProductos) {
-            alert(' Debes seleccionar al menos un producto con cantidad mayor a 0');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atención',
+                text: 'Debes seleccionar al menos un producto con cantidad mayor a 0',
+                confirmButtonColor: '#764ba2'
+            });
             // Volver a habilitar los inputs para que se puedan editar
             inputs.forEach(input => input.disabled = false);
             return false;
@@ -557,7 +564,12 @@
                 ? data.message
                 : 'Error al finalizar la venta';
 
-            alert(mensaje);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al finalizar',
+                text: mensaje,
+                confirmButtonColor: '#764ba2'
+            });
         }
     })
     .catch(err => console.error('Error en la petición:', err));
@@ -771,7 +783,12 @@ function verificarMesa(id, tipo, estado) {
 
     if (!startTime) {
         // Si no hay cronómetro activo
-        alert('⚠️ La mesa está disponible. Inicia el tiempo antes de agregar productos.');
+        Swal.fire({
+            icon: 'info',
+            title: 'Mesa Disponible',
+            text: 'Debes iniciar el tiempo de la mesa antes de poder agregar productos al consumo.',
+            confirmButtonColor: '#667eea'
+        });
         return;
     }
 
