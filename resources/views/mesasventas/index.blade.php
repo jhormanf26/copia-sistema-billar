@@ -84,7 +84,7 @@
 }
 
 /* Paginación */
-.pagination .page-link {
+body.dark-mode .pagination .page-link {
     color: white !important;
 }
 </style>
