@@ -860,7 +860,7 @@
     }
 
     .box-profile {
-        background-color: #fff;
+     /* background-color: #fff; */
     }
 
     .list-group-item {
@@ -868,6 +868,18 @@
         border-bottom: 1px solid #f0f0f0;
         padding: 0.75rem 0;
         background-color: transparent;
+        color: #333; /* Un negro/gris oscuro más suave para modo claro */
+    }
+    
+    .dark-mode .list-group-item {
+        color: #fff; /* Blanco para modo oscuro */
+        border-bottom-color: #4a5056; /* Borde más sutil en modo oscuro */
+    }
+    .list-group-item.active {
+        color: #333; /* Blanco para modo oscuro */
+    }
+    .list-group-item:hover {
+        color: #333; /* Blanco para modo oscuro */
     }
 
     .list-group-item:last-child {
