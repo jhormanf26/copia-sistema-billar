@@ -201,7 +201,7 @@ body.dark-mode .pagination .page-link {
 
         {{-- Modal de productos agregados (Mesa NORMAL) --}}
         @if(!empty($mesa->ventaActiva) )
-        <div class="modal fade" id="productosAgregadosModal-{{ $mesa->idmesa }}" tabindex="-1"
+        <div class="modal fade drawer right" id="productosAgregadosModal-{{ $mesa->idmesa }}" tabindex="-1"
              aria-labelledby="productosAgregadosLabel-{{ $mesa->idmesa }}" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
@@ -367,7 +367,7 @@ body.dark-mode .pagination .page-link {
         @endif
 
         {{-- Modal de agregar productos (Mesa NORMAL) --}}
-        <div class="modal fade" id="productosModal-{{ $mesa->idmesa }}" tabindex="-1" aria-labelledby="productosModalLabel-{{ $mesa->idmesa }}" aria-hidden="true">
+        <div class="modal fade drawer right" id="productosModal-{{ $mesa->idmesa }}" tabindex="-1" aria-labelledby="productosModalLabel-{{ $mesa->idmesa }}" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content border-0 shadow-lg">
                     <div class="modal-header">

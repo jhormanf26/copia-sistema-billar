@@ -64,3 +64,32 @@ body.dark-mode .bento-card {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
+
+/* Offcanvas Drawer Pattern (Extends Bootstrap 4 Modals) */
+.modal.drawer.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    height: 100%;
+    transform: translate3d(100%, 0, 0);
+    transition: transform 0.3s ease-in-out;
+    right: 0;
+    top: 0;
+    padding: 0;
+}
+.modal.drawer.right .modal-dialog.modal-lg {
+    max-width: 500px;
+    width: 100%;
+}
+.modal.drawer.right.show .modal-dialog {
+    transform: translate3d(0, 0, 0);
+}
+.modal.drawer.right .modal-content {
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 0;
+    border: none;
+}
+/* Animación suave para backdrop */
+.modal-backdrop {
+    backdrop-filter: blur(3px);
+}

@@ -22,6 +22,11 @@
 - [x] Eliminar emojis del registro (`auth/register.blade.php`)
 - [x] Implementar shimmer/skeleton en KPIs del dashboard
 
+## Tareas Pendientes (Fase 3: Refactorización Estructural)
+- [x] Construir sistema de clases `.drawer.right` CSS puro sobre Bootstrap 4.
+- [x] Migrar visualmente los pesados Modales de adición POS a un Drawer Offcanvas.
+- [ ] Centralizar/optimizar modales (reducir sobrecarga del DOM) mediante AJAX (Opcional Futuro).
+
 ## Decisiones Recientes
 - **SweetAlert2 Global:** Se activó el plugin de AdminLTE para cargarlo una sola vez en el layout, eliminando ~200KB de descargas redundantes por página.
 - **SVG Inline vs FontAwesome:** Para el login (que no usa AdminLTE), se usaron SVG inline en lugar de cargar FontAwesome como dependencia adicional.
