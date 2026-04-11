@@ -27,7 +27,7 @@ class Compra extends Model
 
     public function proveedor()
     {
-        return $this->belongsTo(Proveedores::class, 'idproveedor', 'idproveedor');
+        return $this->belongsTo(Proveedor::class, 'idproveedor', 'idproveedor');
     }
 
     public function detalles()

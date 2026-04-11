@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proveedores extends Model
+class Proveedor extends Model
 {
     protected $table = 'proveedores';   // nombre de la tabla
 
@@ -19,6 +19,6 @@ class Proveedores extends Model
     ];
      public function productos()
     {
-        return $this->hasMany(Productos::class, 'idproveedor');
+        return $this->hasMany(Producto::class, 'idproveedor');
     }
 }

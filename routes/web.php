@@ -101,8 +101,8 @@ Route::middleware(['auth', 'active', 'check-user-active'])->group(function () {
         });
 
         Route::get('/mesas-ocupadas', function () {
-            $total = \App\Models\Mesas::count();
-            $ocupadas = \App\Models\Mesas::where('estado', 'ocupada')
+            $total = \App\Models\Mesa::count();
+            $ocupadas = \App\Models\Mesa::where('estado', 'ocupada')
                 ->get(['idmesa', 'numeromesa', 'tipo']);
             return response()->json([
                 'ocupadas' => $ocupadas->count(),
@@ -112,7 +112,7 @@ Route::middleware(['auth', 'active', 'check-user-active'])->group(function () {
         });
 
         Route::get('/productos-cantidad', function () {
-            $cantidad = \App\Models\productos::count();
+            $cantidad = \App\Models\Producto::count();
             return response()->json(['cantidad' => $cantidad]);
         });
 

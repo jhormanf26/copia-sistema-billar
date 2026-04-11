@@ -43,6 +43,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'numerodocumento' => $request->numerodocumento,
             'tipo' => $request->tipo, // Guardar el rol
+            'tipodocumento' => $request->tipodocumento ?? 'cc', // Valor por defecto o del request
             'estado' => 'inactivo', // Por defecto, nuevo usuario activo
         ]);
 

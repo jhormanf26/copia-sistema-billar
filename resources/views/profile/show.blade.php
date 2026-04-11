@@ -934,6 +934,7 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Función para alternar visibilidad de contraseña
     function togglePassword(fieldId) {
@@ -973,7 +974,12 @@
             document.getElementById('eliminarCuentaForm').addEventListener('submit', function(e) {
                 if (!confirmDeleteCheckbox.checked) {
                     e.preventDefault();
-                    alert('Debes confirmar que entiendes las consecuencias de esta acción.');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Confirmación requerida',
+                        text: 'Debes marcar la casilla para confirmar que entiendes las consecuencias de esta acción.',
+                        confirmButtonColor: '#dc3545'
+                    });
                 }
             });
         }

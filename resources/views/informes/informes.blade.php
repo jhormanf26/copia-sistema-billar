@@ -544,6 +544,7 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
     let chartVentas = null;
@@ -632,7 +633,12 @@
     function cargarComparacionMeses() {
         const mesesChecked = Array.from(document.querySelectorAll('.checkbox-mes:checked')).map(el => el.value);
         if (mesesChecked.length === 0) {
-            alert('Por favor selecciona al menos un mes');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Selección vacía',
+                text: 'Por favor selecciona al menos un mes para realizar la comparación.',
+                confirmButtonColor: '#17a2b8'
+            });
             return;
         }
 

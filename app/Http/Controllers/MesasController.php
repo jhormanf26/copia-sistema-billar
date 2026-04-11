@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mesas;
+use App\Models\Mesa;
 use Illuminate\Http\Request;
 
 class MesasController extends Controller
@@ -12,7 +12,7 @@ class MesasController extends Controller
      */
 public function index()
 {
-    $mesas = mesas::all();
+    $Mesa = Mesa::all();
 
     return view('mesas.index', compact('mesas'));
 }
@@ -32,14 +32,14 @@ public function index()
      */
     public function store(Request $request)
     {
-        mesas::create($request->all());
+        Mesa::create($request->all());
         return redirect()->route('mesas.index')->with('success', 'Mesa creada correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(mesas $mesas)
+    public function show(Mesa $mesas)
     {
         //
     }
@@ -49,7 +49,7 @@ public function index()
      */
     public function edit($idmesa)
     {
-        $mesa = mesas::findOrFail($idmesa);
+        $mesa = Mesa::findOrFail($idmesa);
         return view('mesas.edit', compact('mesa'));
     }
 
@@ -58,7 +58,7 @@ public function index()
      */
     public function update(Request $request, $idmesa)
     {
-        $mesa = mesas::findOrFail($idmesa);
+        $mesa = Mesa::findOrFail($idmesa);
         $mesa->update($request->all());
         return redirect()->route('mesas.index')->with('success', 'Mesa actualizada correctamente.');
     }
@@ -68,7 +68,7 @@ public function index()
      */
     public function destroy($idmesa)
     {
-        $mesa = mesas::findOrFail($idmesa);
+        $mesa = Mesa::findOrFail($idmesa);
         $mesa->delete();
         return redirect()->route('mesas.index')->with('success', 'Mesa eliminada correctamente.');
     }
@@ -79,7 +79,7 @@ public function index()
         'estado' => 'required|in:libre,ocupada,reservada',
     ]);
 
-    $mesa = mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->estado = $request->estado;
     $mesa->save();
 
@@ -87,7 +87,7 @@ public function index()
 }
 public function startTimer($idmesa)
 {
-    $mesa = mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->inicio_tiempo = now();
     $mesa->estado = 'ocupada';
     $mesa->save();
@@ -97,7 +97,7 @@ public function startTimer($idmesa)
 
 public function stopTimer($idmesa)
 {
-    $mesa = mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->fin_tiempo = now();
     $mesa->estado = 'libre';
     $mesa->save();

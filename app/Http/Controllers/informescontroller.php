@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\MesasVentas;
-use App\Models\Productos;
-use App\Models\Mesas;
+use App\Models\MesaVenta;
+use App\Models\Producto;
+use App\Models\Mesa;
 use App\Models\Compra;
 use App\Models\CompraDetalle;
 use Carbon\Carbon;
@@ -31,7 +31,7 @@ class InformesController extends Controller
         $fechaFin = $request->get('fecha_fin') ? Carbon::parse($request->get('fecha_fin'))->endOfDay() : Carbon::now();
         $metodo_pago = $request->get('metodo_pago');
 
-        $query = MesasVentas::whereBetween('fechafin', [$fechaInicio, $fechaFin])
+        $query = MesaVenta::whereBetween('fechafin', [$fechaInicio, $fechaFin])
             ->whereNotNull('fechafin');
 
         if ($metodo_pago) {
@@ -109,7 +109,7 @@ class InformesController extends Controller
         $fechaInicio = $request->get('fecha_inicio') ? Carbon::parse($request->get('fecha_inicio')) : Carbon::now()->startOfMonth();
         $fechaFin = $request->get('fecha_fin') ? Carbon::parse($request->get('fecha_fin'))->endOfDay() : Carbon::now();
 
-        $datos = MesasVentas::whereBetween('fechafin', [$fechaInicio, $fechaFin])
+        $datos = MesaVenta::whereBetween('fechafin', [$fechaInicio, $fechaFin])
             ->whereNotNull('fechafin')
             ->selectRaw('metodo_pago, SUM(total) as total, COUNT(*) as cantidad')
             ->groupBy('metodo_pago')
@@ -134,9 +134,9 @@ class InformesController extends Controller
         $fechaInicio = $request->get('fecha_inicio') ? Carbon::parse($request->get('fecha_inicio')) : Carbon::now()->startOfDay();
         $fechaFin = $request->get('fecha_fin') ? Carbon::parse($request->get('fecha_fin'))->endOfDay() : Carbon::now();
 
-        $totalMesas = Mesas::count();
-        $mesasOcupadas = Mesas::where('estado', 'ocupada')->count();
-        $mesasDisponibles = Mesas::where('estado', 'disponible')->count();
+        $totalMesas = Mesa::count();
+        $mesasOcupadas = Mesa::where('estado', 'ocupada')->count();
+        $mesasDisponibles = Mesa::where('estado', 'disponible')->count();
 
         $ventasPorMesa = DB::table('mesasventas')
             ->join('mesas', 'mesasventas.idmesa', '=', 'mesas.idmesa')
@@ -163,16 +163,16 @@ class InformesController extends Controller
         $fechaInicio = $request->get('fecha_inicio') ? Carbon::parse($request->get('fecha_inicio')) : Carbon::now()->startOfMonth();
         $fechaFin = $request->get('fecha_fin') ? Carbon::parse($request->get('fecha_fin'))->endOfDay() : Carbon::now();
 
-        $totalVentas = MesasVentas::whereBetween('fechafin', [$fechaInicio, $fechaFin])
+        $totalVentas = MesaVenta::whereBetween('fechafin', [$fechaInicio, $fechaFin])
             ->whereNotNull('fechafin')
             ->sum('total');
 
-        $cantidadTransacciones = MesasVentas::whereBetween('fechafin', [$fechaInicio, $fechaFin])
+        $cantidadTransacciones = MesaVenta::whereBetween('fechafin', [$fechaInicio, $fechaFin])
             ->whereNotNull('fechafin')
             ->count();
 
-        $productosTotales = Productos::count();
-        $mesasTotales = Mesas::count();
+        $productosTotales = Producto::count();
+        $mesasTotales = Mesa::count();
 
         return response()->json([
             'total_ventas' => round($totalVentas, 2),
@@ -203,11 +203,11 @@ class InformesController extends Controller
             $inicio = Carbon::createFromFormat('Y-m', $mes)->startOfMonth();
             $fin = $inicio->copy()->endOfMonth();
 
-            $totalVentas = MesasVentas::whereBetween('fechafin', [$inicio, $fin])
+            $totalVentas = MesaVenta::whereBetween('fechafin', [$inicio, $fin])
                 ->whereNotNull('fechafin')
                 ->sum('total');
 
-            $cantidadTransacciones = MesasVentas::whereBetween('fechafin', [$inicio, $fin])
+            $cantidadTransacciones = MesaVenta::whereBetween('fechafin', [$inicio, $fin])
                 ->whereNotNull('fechafin')
                 ->count();
 

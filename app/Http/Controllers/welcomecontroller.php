@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\Proveedores;
-use App\Models\mesas;
+use App\Models\Proveedor;
+use App\Models\Mesa;
 
 class WelcomeController extends Controller
 {

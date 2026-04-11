@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Mesas;
-use App\Models\MesasConsumos;
-use App\Models\Productos;
-use App\Models\MesasVentas;
+use App\Models\Mesa;
+use App\Models\MesaConsumo;
+use App\Models\Producto;
+use App\Models\MesaVenta;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -15,8 +15,8 @@ class MesasventasController extends Controller
 
 {
     // Cargar mesas con ventaActiva y los productos asociados
-    $mesas = Mesas::with(['ventaActiva.productos'])->get();
-    $productos = Productos::where('idproveedor', '!=', 5)->get();
+    $mesas = Mesa::with(['ventaActiva.productos'])->get();
+    $productos = Producto::where('idproveedor', '!=', 5)->get();
 
     // ...
     return view('mesasventas.index', compact('mesas','productos'));
@@ -25,7 +25,7 @@ class MesasventasController extends Controller
 
     // Esto asegura que el total se actualice al agregar productos.
 
-    private function _actualizarTotalVenta(MesasVentas $venta)
+    private function _actualizarTotalVenta(MesaVenta $venta)
 {
     // Vuelve a cargar la relación productos para tener los datos más recientes
     $venta->load('productos');
@@ -45,7 +45,7 @@ class MesasventasController extends Controller
      */
     private function tarifaHoraPorMesaId($idmesa)
     {
-        $mesa = Mesas::find($idmesa);
+        $mesa = Mesa::find($idmesa);
         if (!$mesa) {
             return 10000; // valor por defecto si no existe la mesa
         }
@@ -60,7 +60,7 @@ class MesasventasController extends Controller
         $productoId = $map[$tipo] ?? null;
 
         if ($productoId) {
-            $producto = Productos::find($productoId);
+            $producto = Producto::find($productoId);
             if ($producto && isset($producto->precio)) {
                 return $producto->precio;
             }
@@ -72,11 +72,11 @@ class MesasventasController extends Controller
 
    public function agregarProductos(Request $request, $idmesa)
 {
-    $mesa = Mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
 
-    $venta = MesasVentas::where('idmesa', $idmesa)->whereNull('fechafin')->first();
+    $venta = MesaVenta::where('idmesa', $idmesa)->whereNull('fechafin')->first();
     if (!$venta) {
-        $venta = MesasVentas::create(['idmesa'=>$idmesa,'total'=>0]);
+        $venta = MesaVenta::create(['idmesa'=>$idmesa,'total'=>0]);
         if ($mesa->estado !== 'ocupada') {
              $mesa->estado = 'ocupada';
              $mesa->save();
@@ -88,7 +88,7 @@ class MesasventasController extends Controller
 
     foreach ($cantidadesInput as $productoId => $cantidad) {
         if ($cantidad > 0) {
-            $producto = Productos::findOrFail($productoId);
+            $producto = Producto::findOrFail($productoId);
 
             if ($producto->stock < $cantidad) {
                 return redirect()->back()->with('error', "Stock insuficiente para {$producto->nombre}");
@@ -123,17 +123,17 @@ class MesasventasController extends Controller
 
     public function iniciar($idmesa)
     {
-        $mesa = Mesas::findOrFail($idmesa);
+        $mesa = Mesa::findOrFail($idmesa);
 
         // Solo inicia si está disponible para evitar problemas
         if ($mesa->estado == 'disponible' || $mesa->estado == 'reservada') {
             $mesa->estado = 'ocupada';
             $mesa->save();
         }
-            $venta = MesasVentas::where('idmesa',$idmesa)->whereNull('fechafin')->first();
+            $venta = MesaVenta::where('idmesa',$idmesa)->whereNull('fechafin')->first();
             // error_log(print_r($venta->toJson(), true));
             if (!$venta) {
-                MesasVentas::create(['idmesa'=>$idmesa,'fechainicio'=>now(),'total'=>0]);
+                MesaVenta::create(['idmesa'=>$idmesa,'fechainicio'=>now(),'total'=>0]);
             } else {
                 // Reinicia la fecha de inicio si ya existe una venta
                 $venta->update(['fechainicio' => now()]);
@@ -146,7 +146,7 @@ class MesasventasController extends Controller
 
 {
     // Buscar la venta activa de esa mesa
-    $venta = MesasVentas::where('idmesa', $idmesa)
+    $venta = MesaVenta::where('idmesa', $idmesa)
         ->whereNull('fechafin')
         ->latest()
         ->first();
@@ -174,7 +174,7 @@ class MesasventasController extends Controller
     $tipo = $venta->mesa->tipo ?? null;
     $idProductoTiempo = $map[$tipo] ?? null;
     // asegurar que existe el producto
-    $productoTiempo = $idProductoTiempo ? Productos::find($idProductoTiempo) : null;
+    $productoTiempo = $idProductoTiempo ? Producto::find($idProductoTiempo) : null;
     if (!$productoTiempo) {
         // manejar error: no hay producto para este tipo de mesa
         return redirect()->back()->with('error', 'No se encontró el producto de tiempo para esta mesa.');
@@ -203,7 +203,7 @@ class MesasventasController extends Controller
 
 
     /* Liberar la mesa
-    $mesa = Mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->estado = 'disponible';
     $mesa->save();*/
 
@@ -214,12 +214,12 @@ class MesasventasController extends Controller
 
    public function reiniciar($idmesa)
 {
-    $mesa = Mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->estado = 'disponible';
     $mesa->save();
 
     // Obtiene la venta activa (si existe)
-    $venta = MesasVentas::where('idmesa', $idmesa)->whereNull('fechafin')->first();
+    $venta = MesaVenta::where('idmesa', $idmesa)->whereNull('fechafin')->first();
 
     if ($venta) {
         // Finaliza la venta sin borrarla
@@ -246,7 +246,7 @@ class MesasventasController extends Controller
 
     public function actualizarEstado(Request $request, $idmesa)
 {
-    $mesa = Mesas::findOrFail($idmesa);
+    $mesa = Mesa::findOrFail($idmesa);
     $mesa->estado = $request->input('estado', 'disponible');
     $mesa->save();
 
@@ -262,7 +262,7 @@ class MesasventasController extends Controller
 }
 public function eliminarProducto(Request $request, $ventaId, $idMesaVenta_producto)
 {
-    $venta = MesasVentas::findOrFail($ventaId);
+    $venta = MesaVenta::findOrFail($ventaId);
 
     // Buscar el producto en la venta
     $productoPivot = $venta->productos()->wherePivot('id', $idMesaVenta_producto)->first();
@@ -285,7 +285,7 @@ public function eliminarProducto(Request $request, $ventaId, $idMesaVenta_produc
         return redirect()->back()->with('error', "No puedes eliminar {$cantidadAEliminar} unidades. Solo hay {$cantidadActual} agregadas.");
     }
 
-    $producto = Productos::findOrFail($productoPivot->pivot->idproducto);
+    $producto = Producto::findOrFail($productoPivot->pivot->idproducto);
 
     if ($cantidadAEliminar < $cantidadActual) {
         // Resta la cantidad especificada y actualiza subtotal
@@ -325,7 +325,7 @@ public function finalizarConsumo($idmesa)
     $mesa->estado = 'disponible';
     $mesa->save();
 
-    $venta = MesasVentas::where('idmesa', $idmesa)
+    $venta = MesaVenta::where('idmesa', $idmesa)
         ->whereNull('fechafin')
         ->latest()
         ->first();
@@ -360,7 +360,7 @@ public function finalizarConsumo($idmesa)
 public function finalizarVenta(Request $request, $idmesa)
 {
     // Buscar la venta activa por mesa
-    $venta = MesasVentas::where('idmesa', $idmesa)
+    $venta = MesaVenta::where('idmesa', $idmesa)
         ->whereNull('fechafin')
         ->latest()
         ->first();
@@ -380,7 +380,7 @@ public function finalizarVenta(Request $request, $idmesa)
     ]);
 
     // Liberar mesa
-    $mesa = \App\Models\Mesas::findOrFail($idmesa);
+    $mesa = \App\Models\Mesa::findOrFail($idmesa);
     $mesa->estado = 'disponible';
     $mesa->save();
 
@@ -395,7 +395,7 @@ public function finalizarVenta(Request $request, $idmesa)
     public function historial()
     {
         // Obtener todas las ventas ordenadas por la más reciente
-        $ventas = MesasVentas::with(['mesa', 'productos'])->orderByDesc('id')->get();
+        $ventas = MesaVenta::with(['mesa', 'productos'])->orderByDesc('id')->get();
 
         // Calcular estadísticas
         $ingresoTotal = $ventas->sum('total');

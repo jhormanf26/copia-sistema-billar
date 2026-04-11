@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MesasVentas extends Model
+class MesaVenta extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class MesasVentas extends Model
 
  public function productos()
 {
-    return $this->belongsToMany(Productos::class, 'mesasventas_productos', 'idmesaventa', 'idproducto')
+    return $this->belongsToMany(Producto::class, 'mesasventas_productos', 'idmesaventa', 'idproducto')
                 ->withPivot('id','cantidad', 'precio_unitario', 'subtotal')
                 ->withTimestamps();
 }
@@ -35,7 +35,7 @@ class MesasVentas extends Model
  public function mesa()
     {
         // Puede ser mesa normal o de consumo según cómo guardes idmesa
-        return $this->belongsTo(Mesas::class, 'idmesa', 'idmesa');
+        return $this->belongsTo(Mesa::class, 'idmesa', 'idmesa');
     }
 
 public function showFactura($id)

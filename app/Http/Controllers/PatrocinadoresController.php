@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\patrocinadores;
+use App\Models\Patrocinador;
 use Illuminate\Http\Request;
 
 class PatrocinadoresController extends Controller
@@ -34,7 +34,7 @@ class PatrocinadoresController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(patrocinadores $patrocinadores)
+    public function show(Patrocinador $patrocinadores)
     {
         //
     }
@@ -42,7 +42,7 @@ class PatrocinadoresController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(patrocinadores $patrocinadores)
+    public function edit(Patrocinador $patrocinadores)
     {
         //
     }
@@ -50,7 +50,7 @@ class PatrocinadoresController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, patrocinadores $patrocinadores)
+    public function update(Request $request, Patrocinador $patrocinadores)
     {
         //
     }
@@ -58,7 +58,7 @@ class PatrocinadoresController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(patrocinadores $patrocinadores)
+    public function destroy(Patrocinador $patrocinadores)
     {
         //
     }
