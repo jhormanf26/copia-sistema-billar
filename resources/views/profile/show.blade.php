@@ -761,17 +761,17 @@
                                         </small>
                                     </div>
 
-                                    <button type="submit" class="btn btn-success btn-block">
+                                    <button type="submit" class="btn btn-success btn-block" id="uploadAvatarBtn" disabled>
                                         <i class="fas fa-upload mr-2"></i> Subir Imagen
                                     </button>
                                 </form>
 
                                 @if(auth()->user()->avatar_image)
                                     <div class="mt-3">
-                                        <form action="{{ route('profile.deleteAvatarImage') }}" method="POST" style="display: inline;">
+                                        <form action="{{ route('profile.deleteAvatarImage') }}" method="POST" style="display: inline;" id="deleteAvatarForm">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('¿Eliminar la imagen de avatar?')">
+                                            <button type="button" class="btn btn-danger btn-block" onclick="confirmarEliminarAvatar()">
                                                 <i class="fas fa-trash mr-2"></i> Eliminar Imagen Actual
                                             </button>
                                         </form>
@@ -1034,17 +1034,43 @@
             });
         }
 
-        // Vista previa de imagen subida
-        function previewUploadedImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('uploadPreview').src = e.target.result;
-                    document.querySelector('.custom-file-label').textContent = input.files[0].name;
-                }
-                reader.readAsDataURL(input.files[0]);
+    // Alerta SweetAlert para eliminar Avatar
+    window.confirmarEliminarAvatar = function() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará tu imagen personalizada actual y volverás al avatar por defecto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash"></i> Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteAvatarForm').submit();
             }
+        });
+    };
+
+    // Vista previa de imagen subida expuesta de forma global
+    window.previewUploadedImage = function(input) {
+        const uploadBtn = document.getElementById('uploadAvatarBtn');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('uploadPreview').src = e.target.result;
+                document.querySelector('.custom-file-label').textContent = input.files[0].name;
+            }
+            reader.readAsDataURL(input.files[0]);
+            
+            // Habilitar el botón ya que se seleccionó un archivo
+            if (uploadBtn) uploadBtn.disabled = false;
+        } else {
+            // Deshabilitar el botón si el usuario cancela la selección de archivo
+            if (uploadBtn) uploadBtn.disabled = true;
+            document.querySelector('.custom-file-label').textContent = 'Elige un archivo...';
         }
+    };
 
         // Inicializar tooltips
         if (typeof $ !== 'undefined') {
