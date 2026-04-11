@@ -96,7 +96,7 @@
                                 <label for="proveedor-filtro">Proveedor (Compras)</label>
                                 <select id="proveedor-filtro" class="form-control">
                                     <option value="">Todos</option>
-                                    @foreach(\App\Models\Proveedores::all() as $proveedor)
+                                    @foreach(\App\Models\Proveedor::all() as $proveedor)
                                         <option value="{{ $proveedor->idproveedor }}">{{ $proveedor->nombre }}</option>
                                     @endforeach
                                 </select>
