@@ -1,0 +1,49 @@
+/* Dark Mode Overrides for UI-UX Pro Max compliance */
+body.dark-mode {
+    background-color: var(--surface-dark);
+    color: var(--text-main-dark);
+}
+
+body.dark-mode .content-wrapper,
+body.dark-mode .main-header {
+    background-color: var(--surface-dark) !important;
+    border-color: var(--surface-dark-border) !important;
+}
+
+body.dark-mode .card,
+body.dark-mode .info-box,
+body.dark-mode .small-box {
+    background-color: var(--surface-dark-elevated) !important;
+    color: var(--text-main-dark) !important;
+    border: 1px solid var(--surface-dark-border);
+}
+
+body.dark-mode .card-header {
+    border-bottom: 1px solid var(--surface-dark-border);
+}
+
+body.dark-mode .card-footer {
+    border-top: 1px solid var(--surface-dark-border);
+    background-color: var(--surface-dark-highest) !important;
+}
+
+body.dark-mode .main-sidebar {
+    background-color: var(--surface-dark-elevated) !important;
+}
+
+body.dark-mode .text-muted {
+    color: var(--text-muted-dark) !important;
+}
+
+/* Modals */
+body.dark-mode .modal-content {
+    background-color: var(--surface-dark-elevated);
+    border-color: var(--surface-dark-border);
+    color: var(--text-main-dark);
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    background-color: var(--surface-dark-elevated);
+    border-color: var(--surface-dark-border);
+}

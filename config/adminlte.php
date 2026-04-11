@@ -486,6 +486,21 @@ return [
                 ],
             ],
         ],
+        'BillarNexusUI' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/billarnexus-tokens.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/dark-mode-overrides.css',
+                ],
+            ],
+        ],
     ],
 
     /*
