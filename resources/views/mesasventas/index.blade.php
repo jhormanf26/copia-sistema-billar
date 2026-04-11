@@ -123,8 +123,10 @@ body.dark-mode .pagination .page-link {
         @foreach($mesas as $mesa)
         <div class="col-md-3 mb-3">
             <div class="bento-card {{ $mesa->estado == 'ocupada' ? 'border-danger' : ($mesa->estado == 'reservada' ? 'border-info' : 'border-success') }}" style="border-top-width: 4px;">
-                <div class="card-header text-center">
-                    <h4 class="card-title mb-0">Mesa #{{ $mesa->numeromesa }}</h4>
+                <div class="card-header border-0 pb-0 pt-3 d-flex justify-content-center">
+                    <h4 class="card-title mb-0 d-flex align-items-center">
+                        <span class="billiard-ball">{{ $mesa->numeromesa }}</span>
+                    </h4>
                 </div>
                 <div class="card-body text-center">
                     <img src="{{ asset('img/mesas/' . ($mesa->tipo ?? 'default') . '.png') }}" alt="mesa" style="height:110px;">

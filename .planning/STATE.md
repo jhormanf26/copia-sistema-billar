@@ -27,6 +27,11 @@
 - [x] Migrar visualmente los pesados Modales de adición POS a un Drawer Offcanvas.
 - [ ] Centralizar/optimizar modales (reducir sobrecarga del DOM) mediante AJAX (Opcional Futuro).
 
+## Tareas Pendientes (Fase 4: "Midnight Felt" Thematic Polish)
+- [x] Ejecutar auditoría `/interface-design:audit` con skill instalada.
+- [x] Ajustar tokens a paleta oscura/neón y construir `.interface-design/system.md`.
+- [x] Implementar "Signature UI" en el número de mesa (Billiard Ball CSS).
+
 ## Decisiones Recientes
 - **SweetAlert2 Global:** Se activó el plugin de AdminLTE para cargarlo una sola vez en el layout, eliminando ~200KB de descargas redundantes por página.
 - **SVG Inline vs FontAwesome:** Para el login (que no usa AdminLTE), se usaron SVG inline en lugar de cargar FontAwesome como dependencia adicional.
