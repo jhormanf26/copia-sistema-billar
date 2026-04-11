@@ -216,6 +216,7 @@ position: relative;
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -328,14 +329,26 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleDayClick(dateKey, currentEvent) {
         const date = new Date(dateKey + 'T00:00:00'); // Asegura zona horaria correcta
         const dayOfMonth = date.getDate();
-        const eventText = prompt(
-            `Evento para el día ${dayOfMonth}:\n\nIngrese el evento o déjelo vacío para borrar:`,
-            currentEvent || ''
-        );
-
-        if (eventText !== null) {
-            saveEvent(dateKey, eventText.trim());
-        }
+        
+        Swal.fire({
+            title: `Evento para el día ${dayOfMonth}`,
+            text: 'Ingrese el evento o déjelo vacío para borrar:',
+            input: 'text',
+            inputValue: currentEvent || '',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#dc3545',
+            inputValidator: (value) => {
+                 // No validamos obligatoriedad porque dejarlo en blanco significa borrar
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                saveEvent(dateKey, (result.value || '').trim());
+            }
+        });
     }
 
     // Llamadas para el calendario

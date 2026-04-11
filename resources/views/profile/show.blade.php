@@ -211,10 +211,10 @@
                     <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
                         <div>
                             <h5 class="mb-1"><i class="fas fa-key mr-2 text-warning"></i> Contraseña</h5>
-                            <small class="text-muted">
+                         <!--    <small class="text-muted">
                                 Última actualización: 
                                 <strong>{{ auth()->user()->updated_at->diffForHumans() }}</strong>
-                            </small>
+                            </small> -->
                         </div>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#cambiarContraseñaModal">
                             <i class="fas fa-edit mr-2"></i> Cambiar
