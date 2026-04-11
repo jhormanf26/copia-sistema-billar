@@ -475,8 +475,6 @@ body.dark-mode .pagination .page-link {
 @stop
 
 @section('js')
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Confirmación elegante para eliminar producto
     function confirmarEliminacion(event, btn) {
@@ -688,7 +686,7 @@ function calculateAndDisplayCardTotals(id) {
     totalConTiempoEl.textContent = new Intl.NumberFormat('es-CO').format(Math.round(totalFinal));
 }
 
-// 📋 Calcular y mostrar totales en el Modal (Productos + Tiempo)
+// Calcular y mostrar totales en el Modal (Productos + Tiempo)
 function calculateAndDisplayModalTotals(id) {
     const modalCronometroEl = document.getElementById('modal-cronometro-' + id);
     const modalTotalProductosEl = document.getElementById('modal-total-productos-' + id);

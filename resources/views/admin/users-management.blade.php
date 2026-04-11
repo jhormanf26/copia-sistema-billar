@@ -71,11 +71,11 @@
                         <td class="px-6 py-4">
                             @if($user->tipo === 'admin')
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
-                                    🔐 Administrador
+                                    <i class="fas fa-shield-alt text-warning mr-1"></i> Administrador
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
-                                    👤 Empleado
+                                    <i class="fas fa-user text-info mr-1"></i> Empleado
                                 </span>
                             @endif
                         </td>
@@ -179,8 +179,8 @@
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Nuevo Rol</label>
                 <select name="tipo" id="roleSelect" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
                     <option value="">-- Selecciona un rol --</option>
-                    <option value="empleado">👤 Empleado (Acceso: Mesas/Ventas)</option>
-                    <option value="admin">🔐 Administrador (Acceso: Total)</option>
+                    <option value="empleado">Empleado (Acceso: Mesas/Ventas)</option>
+                    <option value="admin">Administrador (Acceso: Total)</option>
                 </select>
             </div>
 

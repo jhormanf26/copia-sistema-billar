@@ -57,7 +57,7 @@
         </div>
 
         {{-- PRODUCTOS REGISTRADOS --}}
-        <div class="col-lg-4 col-">
+        <div class="col-lg-4 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3><span id="productosCount">0</span></h3>
@@ -326,16 +326,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleDayClick(dateKey, currentEvent) {
-        const date = new Date(dateKey + 'T00:00:00'); // Asegura zona horaria correcta
+        const date = new Date(dateKey + 'T00:00:00');
         const dayOfMonth = date.getDate();
-        const eventText = prompt(
-            `Evento para el día ${dayOfMonth}:\n\nIngrese el evento o déjelo vacío para borrar:`,
-            currentEvent || ''
-        );
 
-        if (eventText !== null) {
-            saveEvent(dateKey, eventText.trim());
-        }
+        Swal.fire({
+            title: `Evento para el día ${dayOfMonth}`,
+            input: 'text',
+            inputLabel: 'Ingrese el evento o déjelo vacío para borrar:',
+            inputValue: currentEvent || '',
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-save"></i> Guardar',
+            cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+            confirmButtonColor: '#17a2b8',
+            cancelButtonColor: '#6c757d',
+            inputAttributes: {
+                autocapitalize: 'off',
+                maxlength: 100
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                saveEvent(dateKey, (result.value || '').trim());
+            }
+        });
     }
 
     // Llamadas para el calendario

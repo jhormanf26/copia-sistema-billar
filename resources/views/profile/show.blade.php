@@ -484,91 +484,7 @@
     </div>
 </div>
 
-<!-- ===== MODAL: ELIMINAR CUENTA ===== -->
-<div class="modal fade" id="eliminarCuentaModal" tabindex="-1" role="dialog" aria-labelledby="eliminarCuentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content border-danger">
-            <form id="deleteAccountForm" action="{{ route('profile.destroy') }}" method="POST">
-                @csrf
-                @method('DELETE')
-                
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="eliminarCuentaModalLabel">
-                        <i class="fas fa-exclamation-triangle mr-2"></i> Eliminar Cuenta Permanentemente
-                    </h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <div class="modal-body">
-                    <div class="alert alert-danger mb-3">
-                        <i class="fas fa-exclamation-circle mr-2"></i>
-                        <strong>⚠️ Advertencia:</strong> Esta acción no se puede deshacer.
-                    </div>
-
-                    <p class="text-dark mb-3">
-                        Si eliminas tu cuenta:
-                    </p>
-
-                    <ul class="text-muted list-unstyled">
-                        <li class="mb-2">
-                            <i class="fas fa-times-circle text-danger mr-2"></i>
-                            Se eliminarán todos tus datos personales
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-times-circle text-danger mr-2"></i>
-                            Perderás acceso a tu historial de transacciones
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-times-circle text-danger mr-2"></i>
-                            No podremos recuperar tu cuenta
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-times-circle text-danger mr-2"></i>
-                            Se cerrará tu sesión automáticamente
-                        </li>
-                    </ul>
-
-                    <hr class="my-3">
-
-                    <div class="form-group">
-                        <label for="delete_password" class="font-weight-bold">
-                            <i class="fas fa-key mr-2 text-danger"></i> Para confirmar, ingresa tu contraseña:
-                        </label>
-                        <div class="input-group">
-                            <input type="password" 
-                                   class="form-control @error('password') is-invalid @enderror" 
-                                   id="delete_password" 
-                                   name="password" 
-                                   required
-                                   placeholder="Tu contraseña">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('delete_password')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            @error('password')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <small class="text-muted d-block mt-2">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Por seguridad, debes confirmar tu contraseña.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás completamente seguro? Esta acción es irreversible.')">
-                        <i class="fas fa-trash-alt mr-2"></i> Sí, Eliminar Mi Cuenta
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- ===== MODAL: ELIMINAR CUENTA ===== -->
 <div class="modal fade" id="eliminarCuentaModal" tabindex="-1" role="dialog" aria-labelledby="eliminarCuentaModalLabel" aria-hidden="true">
@@ -934,7 +850,6 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Función para alternar visibilidad de contraseña
     function togglePassword(fieldId) {

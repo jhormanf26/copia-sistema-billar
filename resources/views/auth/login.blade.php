@@ -75,12 +75,14 @@
                     <button type="button" id="tab-email" class="login-method-tab flex-1 px-4 py-2 rounded-lg font-medium transition-all
                         bg-orange-600 text-white"
                             data-method="email">
-                        📧 Correo
+                        <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        Correo
                     </button>
                     <button type="button" id="tab-document" class="login-method-tab flex-1 px-4 py-2 rounded-lg font-medium transition-all
                         bg-gray-700 text-gray-300 hover:bg-gray-600"
                             data-method="numerodocumento">
-                        🆔 Documento
+                        <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/></svg>
+                        Documento
                     </button>
                 </div>
             </div>
@@ -123,6 +125,7 @@
                     <!-- Botón ojito -->
                     <button type="button"
                             id="togglePassword"
+                            aria-label="Mostrar u ocultar contraseña"
                             class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-200">
                         <!-- Ícono ojo (visible) -->
                         <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +176,7 @@
         </form>
 
         <p class="text-center text-gray-500 text-sm mt-10">
-            © 2025 BillarNexus. Todos los derechos reservados.
+            © {{ date('Y') }} BillarNexus. Todos los derechos reservados.
         </p>
     </div>
 </div>

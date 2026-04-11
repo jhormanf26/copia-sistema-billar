@@ -48,7 +48,7 @@
 
                     @if(auth()->check())
                         <div class="alert alert-info mt-4" role="alert">
-                            <strong>📋 Tu Información de Cuenta:</strong><br>
+                            <strong><i class="fas fa-clipboard-list mr-1"></i> Tu Información de Cuenta:</strong><br>
                             <small>
                                 <i class="fas fa-user mr-2"></i> <strong>{{ auth()->user()->name }} {{ auth()->user()->apellidos ?? '' }}</strong><br>
                                 <i class="fas fa-shield-alt mr-2"></i> Rol: <strong>{{ ucfirst(auth()->user()->tipo) }}</strong><br>

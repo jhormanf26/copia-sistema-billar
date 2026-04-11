@@ -154,7 +154,6 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $('#formEditarMesa').on('submit', function(e){
         e.preventDefault();

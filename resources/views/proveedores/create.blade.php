@@ -482,6 +482,5 @@
     });
 </script>
 
-{{-- SweetAlert2 para confirmaciones modernas --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @stop

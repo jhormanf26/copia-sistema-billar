@@ -71,12 +71,12 @@
                 
                 <!-- COLUMNA IZQUIERDA: Información Personal -->
                 <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-orange-400 mb-3">📋 Información Personal</h3>
+                    <h3 class="text-lg font-semibold text-orange-400 mb-3"><svg class="inline w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> Información Personal</h3>
                     
                     <!-- Número de documento -->
                     <div>
                         <label for="numerodocumento" class="block text-sm font-medium text-gray-300 mb-2">
-                            🆔 Número de documento
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/></svg> Número de documento
                         </label>
                         <input 
                             type="number" 
@@ -94,7 +94,7 @@
                     <!-- Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
-                            👤 Nombre completo
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg> Nombre completo
                         </label>
                         <input 
                             type="text" 
@@ -111,7 +111,7 @@
                     <!-- Email Address -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
-                            📧 Correo electrónico
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> Correo electrónico
                         </label>
                         <input 
                             type="email" 
@@ -128,12 +128,12 @@
 
                 <!-- COLUMNA DERECHA: Rol y Seguridad -->
                 <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-orange-400 mb-3">🔐 Rol y Seguridad</h3>
+                    <h3 class="text-lg font-semibold text-orange-400 mb-3"><svg class="inline w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Rol y Seguridad</h3>
 
                     <!-- Rol / Tipo de Usuario -->
                     <div>
                         <label for="tipo" class="block text-sm font-medium text-gray-300 mb-2">
-                            🎯 Rol / Tipo de Usuario
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Rol / Tipo de Usuario
                         </label>
                         <select 
                             id="tipo" 
@@ -158,7 +158,7 @@
 
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
-                            🔒 Contraseña
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Contraseña
                         </label>
                         <div class="relative">
                             <input 
@@ -170,7 +170,7 @@
                                 placeholder="Mínimo 8 caracteres"
                                 required
                             />
-                            <button type="button" onclick="togglePassword('password', 'eye-icon-1')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
+                            <button type="button" onclick="togglePassword('password', 'eye-icon-1')" aria-label="Mostrar u ocultar contraseña" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
                                 <i id="eye-icon-1" class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -178,7 +178,7 @@
 
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-2">
-                            🔒 Confirmar contraseña
+                            <svg class="inline w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Confirmar contraseña
                         </label>
                         <div class="relative">
                             <input 
@@ -190,7 +190,7 @@
                                 placeholder="Repite tu contraseña"
                                 required
                             />
-                            <button type="button" onclick="togglePassword('password_confirmation', 'eye-icon-2')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
+                            <button type="button" onclick="togglePassword('password_confirmation', 'eye-icon-2')" aria-label="Mostrar u ocultar confirmación de contraseña" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
                                 <i id="eye-icon-2" class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -215,7 +215,7 @@
         </form>
 
         <p class="text-center text-gray-500 text-sm mt-8">
-            © 2025 BillarNexus. Todos los derechos reservados.
+            © {{ date('Y') }} BillarNexus. Todos los derechos reservados.
         </p>
     </div>
 </div>
