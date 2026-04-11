@@ -17,9 +17,9 @@
 ## Tareas Pendientes (Fase 2+)
 - [x] Crear archivo `billarnexus-tokens.css` con custom properties del design system
 - [x] Crear `dark-mode-overrides.css` para contrastes en dark mode
-- [ ] Migrar 7 `confirm()` nativos restantes a SweetAlert2 (users, proveedores, mesas, compras, profile)
+- [x] Migrar 7 `confirm()` nativos restantes a SweetAlert2 (users, proveedores, mesas, compras, profile)
 - [x] Eliminar Bootstrap 5 CDN de `mesasventas/index.blade.php`
-- [ ] Eliminar emojis del registro (`auth/register.blade.php`)
+- [x] Eliminar emojis del registro (`auth/register.blade.php`)
 - [x] Implementar shimmer/skeleton en KPIs del dashboard
 
 ## Decisiones Recientes

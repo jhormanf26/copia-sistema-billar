@@ -687,7 +687,7 @@
                                         <form action="{{ route('profile.deleteAvatarImage') }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('¿Eliminar la imagen de avatar?')">
+                                            <button type="button" class="btn btn-danger btn-block" onclick="const form = this.closest('form'); Swal.fire({title: '¿Estás seguro?', text: '¿Eliminar la imagen de avatar?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}).then((result) => { if (result.isConfirmed) form.submit(); });">
                                                 <i class="fas fa-trash mr-2"></i> Eliminar Imagen Actual
                                             </button>
                                         </form>

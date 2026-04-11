@@ -132,7 +132,7 @@
                                             <a href="{{ route('compras.edit', $compra) }}" class="btn btn-warning" title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('compras.destroy', $compra) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro?')">
+                                            <form action="{{ route('compras.destroy', $compra) }}" method="POST" style="display:inline;" onsubmit="event.preventDefault(); const form = this; Swal.fire({title: '¿Estás seguro?', text: '¿Estás seguro?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}).then((result) => { if (result.isConfirmed) form.submit(); });">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" title="Eliminar">

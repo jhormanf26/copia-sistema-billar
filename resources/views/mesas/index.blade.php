@@ -50,7 +50,7 @@
                                 <i class="fas fa-edit"></i> Editar
                             </a>
                             <form action="{{ route('mesas.destroy', $mesa->idmesa) }}" method="POST" 
-                                  onsubmit="return confirm('¿Estás seguro de eliminar esta mesa?');" class="mx-1">
+                                  onsubmit="event.preventDefault(); const form = this; Swal.fire({title: '¿Estás seguro?', text: '¿Estás seguro de eliminar esta mesa?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}).then((result) => { if (result.isConfirmed) form.submit(); });" class="mx-1">
                                 @csrf
                                 <button class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i> Eliminar

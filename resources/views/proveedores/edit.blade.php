@@ -301,14 +301,26 @@
 
         // Confirmación antes de enviar el formulario
         $('form').on('submit', function(e) {
-            const nombre = $('#nombre').val();
-            const confirmacion = confirm(`¿Está seguro de actualizar los datos del proveedor "${nombre}"?`);
-            
-            if (!confirmacion) {
+            if (!this.dataset.confirmed) {
                 e.preventDefault();
-            } else {
-                // Deshabilitar botón para evitar doble envío
-                $(this).find('button[type="submit"]').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+                const form = this;
+                const nombre = $('#nombre').val();
+                
+                Swal.fire({
+                    title: 'Confirmar actualización',
+                    text: `¿Está seguro de actualizar los datos del proveedor "${nombre}"?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ffc107',
+                    confirmButtonText: '<i class="fas fa-save"></i> Sí, guardar',
+                    cancelButtonText: '<i class="fas fa-times"></i> Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.dataset.confirmed = 'true';
+                        $(form).find('button[type="submit"]').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+                        form.submit();
+                    }
+                });
             }
         });
 

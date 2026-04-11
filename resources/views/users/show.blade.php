@@ -84,7 +84,7 @@
                         <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-edit mr-2"></i> Editar Usuario
                         </a>
-                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="event.preventDefault(); const form = this; Swal.fire({title: '¿Estás seguro?', text: '¿Deseas eliminar este usuario?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar'}).then((result) => { if (result.isConfirmed) form.submit(); });">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm w-100 mt-2">
