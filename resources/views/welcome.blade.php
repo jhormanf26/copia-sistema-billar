@@ -21,55 +21,67 @@
 
         <div class="col-lg-4 col-6">
             {{-- INGRESO DEL DÍA --}}
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>
-                        $<span id="ingresoDia">{{ number_format($ingresoDia ?? 0, 2, ',', '.') }}</span>
-                        <sup style="font-size: 20px">/{{ $nombreDia }}</sup>
-                        <p>Hoy es!</p>
+            <div class="bento-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 4px solid var(--info-blue);">
+                <div class="inner text-center">
+                    <div class="icon text-info mb-2 text-center w-100">
+                        <i class="fas fa-dollar-sign fa-3x opacity-50"></i>
+                    </div>
+                    <h3 class="font-weight-bold mb-0">
+                        $<span id="ingresoDia">
+                            <span class="spinner-border spinner-border-sm text-info" role="status" aria-hidden="true"></span>
+                        </span>
                     </h3>
-                    <p>Ingresos del Día</p>
+                    <p class="text-muted mb-0">Ingresos del Día</p>
+                    <small class="text-muted">/{{ $nombreDia }}</small>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-dollar-sign"></i>
+                <div class="mt-3 text-center">
+                    <a href="{{ route('informes.index')}}" class="btn btn-sm btn-outline-info w-100" style="border-radius: var(--radius-sm)">
+                        Ver reportes
+                    </a>
                 </div>
-                <a href="{{ route('informes.index')}}" class="small-box-footer">
-                    Ver reportes financieros <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
         </div>
 
         {{-- MESAS ACTIVAS/TOTAL --}}
         <div class="col-lg-4 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3><span id="ocupadasCount">0</span><sup style="font-size: 20px">/<span id="mesasTotal">0</span></sup></h3>
-                    <p>Mesas Ocupadas</p>
-                    <div class="mt-2"><small id="listaMesasOcupadas" class="text-white">Cargando...</small></div>
+            <div class="bento-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 4px solid var(--success-teal);">
+                <div class="inner text-center">
+                    <div class="icon text-success mb-2 text-center w-100">
+                        <i class="fas fa-hockey-puck fa-3x opacity-50"></i>
+                    </div>
+                    <h3 class="font-weight-bold mb-0">
+                        <span id="ocupadasCount"><span class="spinner-border spinner-border-sm text-success" role="status"></span></span>
+                        <sup class="text-muted" style="font-size: 16px">/<span id="mesasTotal">0</span></sup>
+                    </h3>
+                    <p class="text-muted mb-0">Mesas Ocupadas</p>
+                    <div class="mt-1"><small id="listaMesasOcupadas" class="text-muted d-inline-block text-truncate" style="max-width: 150px;">Cargando...</small></div>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-hockey-puck billar-icon"></i>
+                <div class="mt-3 text-center">
+                    <a href="{{ route('mesasventas.index')}}" class="btn btn-sm btn-outline-success w-100" style="border-radius: var(--radius-sm)">
+                        Gestión de mesas
+                    </a>
                 </div>
-                <a href="{{ route('mesasventas.index')}}" class="small-box-footer">
-                    Gestión de mesas <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
         </div>
 
         {{-- PRODUCTOS REGISTRADOS --}}
         <div class="col-lg-4 col-6">
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3><span id="productosCount">0</span></h3>
-                    <p>Productos Registrados</p>
-                    <div class="mt-2"><small id="productosInfo" class="text-dark">Cargando...</small></div>
+            <div class="bento-card p-4 h-100 d-flex flex-column justify-content-between" style="border-top: 4px solid var(--primary-orange);">
+                <div class="inner text-center">
+                    <div class="icon text-warning mb-2 text-center w-100" style="color: var(--primary-orange) !important;">
+                        <i class="fas fa-boxes fa-3x opacity-50"></i>
+                    </div>
+                    <h3 class="font-weight-bold mb-0">
+                        <span id="productosCount"><span class="spinner-border spinner-border-sm text-warning" role="status"></span></span>
+                    </h3>
+                    <p class="text-muted mb-0">Productos En Sistema</p>
+                    <div class="mt-1"><small id="productosInfo" class="text-muted">Cargando...</small></div>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-boxes"></i>
+                <div class="mt-3 text-center">
+                    <a href="{{ route('inventario.index')}}" class="btn btn-sm btn-outline-warning w-100" style="border-radius: var(--radius-sm); border-color: var(--primary-orange); color: var(--primary-orange);">
+                        Inventario
+                    </a>
                 </div>
-                <a href="{{ route('inventario.index')}}" class="small-box-footer">
-                    Gestión de Inventario <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
         </div>
 
@@ -137,25 +149,6 @@
 
 @section('css')
 <style> /* Estilos existentes */
-.small-box {
- border-radius: 0.5rem;
-box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.small-box:hover {
-     transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-.small-box .inner h3 { font-weight: 700; }
-
- .small-box.bg-info { background-color: #17a2b8 !important; }
-.small-box.bg-success { background-color: #28a745 !important; }
-.small-box.bg-warning { background-color: #ffc107 !important; color: #333 !important; }
- .small-box.bg-primary { background-color: #007bff !important; }
-
-.small-box .icon {
-font-size: 80px;
-color: rgba(0,0,0,0.15) !important;
- }
-
 /* Asegurar que las cards tengan la misma altura (Importante para la Fila 2) */
 .row > [class*='col-'] .card {
  height: 100%; }
@@ -208,8 +201,9 @@ position: relative;
         border-radius: 5px;
         font-weight: bold;
     }
-    .current-day .event-dot {
-        background-color: white;
+    body.dark-mode #miniCalendar td:hover {
+        background-color: var(--surface-dark-highest);
+        color: white;
     }
 
 </style>
