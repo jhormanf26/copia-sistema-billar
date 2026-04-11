@@ -15,12 +15,12 @@
 - [x] Copyright actualizado a `{{ date('Y') }}` dinámicamente
 
 ## Tareas Pendientes (Fase 2+)
-- [ ] Crear archivo `billarnexus-tokens.css` con custom properties del design system
-- [ ] Crear `dark-mode-overrides.css` para contrastes en dark mode
+- [x] Crear archivo `billarnexus-tokens.css` con custom properties del design system
+- [x] Crear `dark-mode-overrides.css` para contrastes en dark mode
 - [ ] Migrar 7 `confirm()` nativos restantes a SweetAlert2 (users, proveedores, mesas, compras, profile)
-- [ ] Eliminar Bootstrap 5 CDN de `mesasventas/index.blade.php`
+- [x] Eliminar Bootstrap 5 CDN de `mesasventas/index.blade.php`
 - [ ] Eliminar emojis del registro (`auth/register.blade.php`)
-- [ ] Implementar shimmer/skeleton en KPIs del dashboard
+- [x] Implementar shimmer/skeleton en KPIs del dashboard
 
 ## Decisiones Recientes
 - **SweetAlert2 Global:** Se activó el plugin de AdminLTE para cargarlo una sola vez en el layout, eliminando ~200KB de descargas redundantes por página.

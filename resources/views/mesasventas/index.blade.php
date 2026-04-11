@@ -7,34 +7,36 @@
 @stop
 
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<style>
+    {{-- Bootstrap 5 removido para evitar conflictos con AdminLTE. Usando Bootstrap 4 nativo. --}}<style>
 /* Estilos generales */
 .modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-bottom: none;
+    background-color: var(--surface-light);
+    color: var(--text-main-light);
+    border-bottom: 1px solid var(--surface-light-border);
 }
-.modal-header .btn-close { filter: brightness(0) invert(1); }
-.modal-body { padding: 1.5rem; background-color: #f8f9fa; }
+body.dark-mode .modal-header {
+    background-color: var(--surface-dark-highest);
+    color: var(--text-main-dark);
+}
+body.dark-mode .modal-content {
+    background-color: var(--surface-dark-elevated);
+}
+.modal-body { padding: 1.5rem; background-color: var(--surface-light-elevated); }
+body.dark-mode .modal-body { background-color: var(--surface-dark); }
 .cronometro {
     font-weight: bold;
-    color: #444;
-    background: #f3f3f3;
+    color: var(--text-main-light);
+    background: var(--surface-light);
     padding: 6px 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     margin-bottom: 8px;
     display: inline-block;
+    border: 1px solid var(--surface-light-border);
 }
-.card-mesa {
-    border-width: 3px;
-    transition: all 0.3s ease;
-}
-.card-mesa:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transform: translateY(-2px);
+body.dark-mode .cronometro {
+    background: var(--surface-dark-highest);
+    color: var(--text-main-dark);
+    border-color: var(--surface-dark-border);
 }
 
 /* Estilos para el modal de agregar productos */
@@ -100,13 +102,17 @@ body.dark-mode .pagination .page-link {
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle"></i> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     @endif
     @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     @endif
 
@@ -116,7 +122,7 @@ body.dark-mode .pagination .page-link {
         {{-- ================= MESAS  ================= --}}
         @foreach($mesas as $mesa)
         <div class="col-md-3 mb-3">
-            <div class="card card-mesa {{ $mesa->estado == 'ocupada' ? 'border-danger' : ($mesa->estado == 'reservada' ? 'border-info' : 'border-success') }}">
+            <div class="bento-card {{ $mesa->estado == 'ocupada' ? 'border-danger' : ($mesa->estado == 'reservada' ? 'border-info' : 'border-success') }}" style="border-top-width: 4px;">
                 <div class="card-header text-center">
                     <h4 class="card-title mb-0">Mesa #{{ $mesa->numeromesa }}</h4>
                 </div>
@@ -178,13 +184,13 @@ body.dark-mode .pagination .page-link {
                             type="button"
                             class="btn btn-warning btn-sm"
                             onclick="verificarMesa({{ $mesa->idmesa }}, '{{ $mesa->tipo }}', '{{ $mesa->estado }}')"
-                            data-bs-target="#productosModal-{{ $mesa->idmesa }}">
+                            data-target="#productosModal-{{ $mesa->idmesa }}">
                             <i class="fas fa-cart-plus"></i>
                         </button>
 
                         {{-- Botón para ver productos agregados --}}
                         @if($mesa->ventaActiva )
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#productosAgregadosModal-{{ $mesa->idmesa }}">
+                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#productosAgregadosModal-{{ $mesa->idmesa }}">
                                 <i class="fas fa-eye"></i> Ver
                             </button>
                         @endif
@@ -201,11 +207,13 @@ body.dark-mode .pagination .page-link {
                 <div class="modal-content">
                     {{-- Header --}}
                     <div class="modal-header">
-                        <h5 class="modal-title d-flex align-items-center text-white" id="productosAgregadosLabel-{{ $mesa->idmesa }}">
-                            <i class="fas fa-utensils me-2"></i>
+                        <h5 class="modal-title d-flex align-items-center" id="productosAgregadosLabel-{{ $mesa->idmesa }}">
+                            <i class="fas fa-utensils mr-2"></i>
                             Mesa #{{ $mesa->numeromesa }} - Productos Agregados
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
                     {{-- Body --}}
@@ -344,9 +352,9 @@ body.dark-mode .pagination .page-link {
 
                     {{-- Footer con acciones --}}
 
-                    <div class="modal-footer bg-light">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-2"></i>Cerrar
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times mr-2"></i>Cerrar
                         </button>
                         <button type="button" class="btn btn-success" onclick="finalizarVenta({{ $mesa->idmesa }})">
 
@@ -363,10 +371,12 @@ body.dark-mode .pagination .page-link {
             <div class="modal-dialog modal-lg">
                 <div class="modal-content border-0 shadow-lg">
                     <div class="modal-header">
-                        <h5 class="modal-title text-white fw-bold" id="productosModalLabel-{{ $mesa->idmesa }}">
-                            <i class="fas fa-utensils me-2"></i>Agregar productos a Mesa #{{ $mesa->numeromesa }}
+                        <h5 class="modal-title fw-bold" id="productosModalLabel-{{ $mesa->idmesa }}">
+                            <i class="fas fa-utensils mr-2"></i>Agregar productos a Mesa #{{ $mesa->numeromesa }}
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body p-4">
                         {{-- Buscador mejorado --}}
@@ -430,13 +440,22 @@ body.dark-mode .pagination .page-link {
                                                     </span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="number"
-                                                            name="cantidades[{{ $producto->idproducto }}]"
-                                                            min="0"
-                                                            max="{{ $producto->stock }}"
-                                                            class="form-control form-control-sm text-center cantidad-input"
-                                                            value="0"
-                                                            style="border: 2px solid #dee2e6; border-radius: 8px;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; border-radius: var(--radius-sm);" onclick="document.getElementById('cant-{{$mesa->idmesa}}-{{$producto->idproducto}}').stepDown();" aria-label="Disminuir cantidad">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <input type="number"
+                                                                id="cant-{{$mesa->idmesa}}-{{$producto->idproducto}}"
+                                                                name="cantidades[{{ $producto->idproducto }}]"
+                                                                min="0"
+                                                                max="{{ $producto->stock }}"
+                                                                class="form-control text-center mx-2 font-weight-bold cantidad-input"
+                                                                value="0"
+                                                                style="width: 70px; height: 44px; border: 2px solid var(--surface-light-border); border-radius: var(--radius-sm);">
+                                                        <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; border-radius: var(--radius-sm);" onclick="document.getElementById('cant-{{$mesa->idmesa}}-{{$producto->idproducto}}').stepUp();" aria-label="Aumentar cantidad">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -451,11 +470,11 @@ body.dark-mode .pagination .page-link {
                             <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                                 <div>
                                     <small class="text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
+                                        <i class="fas fa-info-circle mr-1"></i>
                                         Selecciona las cantidades deseadas
                                     </small>
                                 </div>
-                                <button type="submit" class="btn btn-lg px-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;" onclick="filtrarProductos(event)">
+                                <button type="submit" class="btn btn-primary btn-lg px-4" onclick="filtrarProductos(event)">
                                     <i class="fas fa-check me-2"></i>Agregar Seleccionados
                                 </button>
                             </div>
@@ -791,8 +810,7 @@ function syncModalTimer(id) {
 function verificarMesa(id, tipo, estado) {
     // Si es mesa de consumo, permitir siempre
     if (tipo === 'consumo' || estado === 'ocupada') {
-        const modal = new bootstrap.Modal(document.getElementById('productosModal-' + id));
-        modal.show();
+        $('#productosModal-' + id).modal('show');
         return;
     }
 
