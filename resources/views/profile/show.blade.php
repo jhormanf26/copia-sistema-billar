@@ -722,7 +722,7 @@
                                          alt="Preview" 
                                          class="img-circle shadow"
                                          id="avatarPreview"
-                                         style="width: 150px; height: 150px; border: 4px solid #007bff;">
+                                         style="width: 150px; height: 150px; border: 4px solid #007bff; object-fit: cover;">
                                     <p class="text-muted mt-3">
                                         <small>El avatar se actualiza automáticamente con tu nombre y apellidos</small>
                                     </p>
