@@ -131,3 +131,33 @@ body.dark-mode .modal.drawer.right .modal-content {
     backdrop-filter: blur(4px);
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+/* ===== Global Controls (Inputs & Buttons) ===== */
+.btn {
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+.btn-primary, .bg-primary {
+    background-color: var(--primary-orange) !important;
+    border-color: var(--primary-orange) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover, .bg-primary:hover {
+    background-color: var(--primary-orange-hover) !important;
+    border-color: var(--primary-orange-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(255,103,0,0.3);
+}
+
+body.dark-mode .btn-primary, body.dark-mode .bg-primary {
+    color: #000 !important; /* Higher contrast in neon context */
+}
+
+.form-control, .custom-select {
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

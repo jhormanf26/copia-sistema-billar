@@ -1,4 +1,6 @@
-/* Dark Mode Overrides for UI-UX Pro Max compliance */
+/* Dark Mode Overrides for UI-UX Pro Max compliance ("Midnight Felt" Context) */
+
+/* Surfaces */
 body.dark-mode {
     background-color: var(--surface-dark);
     color: var(--text-main-dark);
@@ -10,40 +12,128 @@ body.dark-mode .main-header {
     border-color: var(--surface-dark-border) !important;
 }
 
+body.dark-mode .main-header {
+    border-bottom: 1px solid var(--surface-dark-border) !important;
+    box-shadow: none !important;
+}
+
+/* Cards (Applying Depth & Border Scale) */
 body.dark-mode .card,
 body.dark-mode .info-box,
 body.dark-mode .small-box {
     background-color: var(--surface-dark-elevated) !important;
     color: var(--text-main-dark) !important;
     border: 1px solid var(--surface-dark-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
 }
 
 body.dark-mode .card-header {
     border-bottom: 1px solid var(--surface-dark-border);
+    background-color: transparent !important;
 }
 
 body.dark-mode .card-footer {
     border-top: 1px solid var(--surface-dark-border);
     background-color: var(--surface-dark-highest) !important;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
+/* Base Sidebars */
 body.dark-mode .main-sidebar {
-    background-color: var(--surface-dark-elevated) !important;
+    background-color: var(--surface-dark) !important;
+    border-right: 1px solid var(--surface-dark-border);
+    box-shadow: none !important;
 }
 
+body.dark-mode .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, 
+body.dark-mode .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: var(--surface-dark-highest) !important;
+    color: var(--primary-orange) !important;
+    border-radius: var(--radius-sm);
+    box-shadow: inset 2px 0 0 var(--primary-orange);
+}
+
+/* Typography Hierarchy */
 body.dark-mode .text-muted {
     color: var(--text-muted-dark) !important;
 }
 
+/* Inputs (Inset Level - Darker than Elevated Surface) */
+body.dark-mode .form-control,
+body.dark-mode .custom-select {
+    background-color: var(--surface-dark) !important;
+    border: 1px solid var(--surface-dark-border) !important;
+    color: var(--text-main-dark) !important;
+    border-radius: var(--radius-sm);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .custom-select:focus {
+    border-color: var(--primary-orange) !important;
+    box-shadow: 0 0 0 2px rgba(255,103,0,0.2) !important;
+}
+
+body.dark-mode .input-group-text {
+    background-color: var(--surface-dark-highest) !important;
+    border-color: var(--surface-dark-border) !important;
+    color: var(--text-muted-dark) !important;
+}
+
+/* Data Tables */
+body.dark-mode .table {
+    color: var(--text-main-dark);
+}
+body.dark-mode .table th,
+body.dark-mode .table td {
+    border-top: 1px solid var(--surface-dark-border);
+    border-bottom: 1px solid var(--surface-dark-border);
+    vertical-align: middle;
+}
+body.dark-mode .table thead th {
+    border-bottom: 2px solid var(--surface-dark-border);
+    color: var(--text-muted-dark);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    background-color: transparent !important;
+}
+
+/* Dropdowns */
+body.dark-mode .dropdown-menu {
+    background-color: var(--surface-dark-highest);
+    border: 1px solid var(--surface-dark-border);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    border-radius: var(--radius-md);
+}
+body.dark-mode .dropdown-item {
+    color: var(--text-main-dark);
+}
+body.dark-mode .dropdown-item:hover, 
+body.dark-mode .dropdown-item:focus {
+    background-color: var(--surface-dark);
+    color: var(--primary-orange);
+}
+
 /* Modals */
 body.dark-mode .modal-content {
-    background-color: var(--surface-dark-elevated);
-    border-color: var(--surface-dark-border);
+    background-color: var(--surface-dark-highest);
+    border: 1px solid var(--surface-dark-border);
     color: var(--text-main-dark);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
 }
 
 body.dark-mode .modal-header,
 body.dark-mode .modal-footer {
-    background-color: var(--surface-dark-elevated);
+    background-color: transparent;
     border-color: var(--surface-dark-border);
+}
+body.dark-mode .close, body.dark-mode .mailbox-attachment-close {
+    color: var(--text-muted-dark);
+    text-shadow: none;
+}
+body.dark-mode .close:hover {
+    color: var(--primary-orange);
 }
