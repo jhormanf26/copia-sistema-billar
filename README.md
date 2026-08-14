@@ -18,6 +18,8 @@
 El sistema está construido sobre **Laravel 11**, con una interfaz moderna y responsiva basada en **AdminLTE 3**, **TailwindCSS** y **Chart.js**, preparado para ser desplegado sobre infraestructura en la nube (**Oracle Cloud Infrastructure / Docker**).
 
 ---
+<img width="1915" height="940" alt="image" src="https://github.com/user-attachments/assets/63ed81cd-97f0-4977-891c-c01b6014bf34" />
+
 
 ## 🔥 Funcionalidades Principales
 
@@ -27,24 +29,31 @@ El sistema está construido sobre **Laravel 11**, con una interfaz moderna y res
 - **Gestión de Estados**: Alternancia entre estados en tiempo real (*Disponible*, *Ocupada*, *Mantenimiento*).
 - **Control de Sesión**: Operaciones complejas para *Iniciar*, *Pausar*, *Finalizar*, *Reiniciar* y *Cerrar* cuenta de mesa.
 - **Consumo Integrado**: Adición directa de productos y bebidas a la partida activa de la mesa antes del cierre de caja.
+<img width="1896" height="948" alt="image" src="https://github.com/user-attachments/assets/f26f4752-bf7d-4056-aaa1-bb59a1a224ca" />
+<img width="1902" height="954" alt="image" src="https://github.com/user-attachments/assets/89de5df9-9b17-4e8d-852f-48fa338cf926" />
+<img width="1902" height="928" alt="image" src="https://github.com/user-attachments/assets/13139a0a-21a1-4874-99fd-bdf110a56f4e" />
 
 ### 🍺 2. Productos e Inventario
 - **Catálogo de Productos**: Control de artículos por nombre, código/código de barras, categoría y unidad de medida.
 - **Precios & Márgenes**: Gestión de precio de compra vs. precio de venta para cálculo de utilidades.
 - **Control de Stock en Tiempo Real**: Descuento automático de existencias con las ventas y alertas de bajo inventario.
 - **Métricas de Rotación**: Consulta del **Top 5 productos más vendidos** mediante API optimizada.
+<img width="1895" height="955" alt="image" src="https://github.com/user-attachments/assets/8ab1c84a-cfd4-4b50-871d-fe043473f629" />
 
 ### 🚚 3. Compras y Proveedores
 - **Directorio de Proveedores**: Registro detallado de información de contacto, documentos y representantes.
 - **Órdenes de Surtido & Compras**: Registro de facturas e ingresos de mercancía con detalle por producto y precio de costo.
 - **Actualización Automatizada**: Incremento automático de inventario al registrar una compra exitosa.
 - **Historial de Abastecimiento**: Registro auditable de compras realizadas por proveedor y periodo.
+<img width="1908" height="929" alt="image" src="https://github.com/user-attachments/assets/c334d407-16e8-4cb5-b31d-aca542a640ba" />
+<img width="1893" height="950" alt="image" src="https://github.com/user-attachments/assets/e59df7ba-a93d-4d26-9d88-8b0978235bcf" />
 
 ### 💳 4. Ventas y Facturación de Caja
 - **Ticket Consolidado**: Cálculo automático de la suma entre el valor consumido por tiempo de mesa y los productos consumidos.
 - **Múltiples Métodos de Pago**: Registro de pagos en efectivo, transferencias bancarias y tarjetas.
 - **Historial Completo de Ventas**: Consulta de ventas finalizadas con filtros por fecha y mesa.
 - **Eliminación y Ajustes**: Control para eliminar o rectificar productos cargados a una mesa antes de procesar el pago.
+<img width="1893" height="945" alt="image" src="https://github.com/user-attachments/assets/cb305214-8002-4e93-807e-fe77f251fee8" />
 
 ### 📊 5. Dashboard Administrativo (Panel en Tiempo Real)
 - **Indicadores Clave (KPIs)**:
@@ -53,6 +62,7 @@ El sistema está construido sobre **Laravel 11**, con una interfaz moderna y res
   - Cantidad total de productos en catálogo.
 - **Gráficos Interactivos**: Ventas acumuladas de la semana desglosadas por día mediante **Chart.js**.
 - **Accesos Rápidos**: Botones funcionales a la gestión directa de mesas y ventas.
+<img width="1919" height="947" alt="image" src="https://github.com/user-attachments/assets/65338741-d04d-435d-a007-c82437f1945c" />
 
 ### 📈 6. Informes y Business Intelligence (BI)
 - **Reporte de Ventas**: Análisis de ingresos por rango de fechas y periodos.
@@ -61,6 +71,7 @@ El sistema está construido sobre **Laravel 11**, con una interfaz moderna y res
 - **Tasa de Ocupación de Mesas**: Estadísticas de uso e intensidad de alquiler por mesa.
 - **Comparativa Mensual**: Análisis comparativo de ingresos mes a mes.
 - **Analítica de Compras**: Resumen de gastos de abastecimiento por proveedor y por producto adquirido.
+<img width="1914" height="916" alt="image" src="https://github.com/user-attachments/assets/760a0211-3455-4c4b-b937-3ea385b7635a" />
 
 ### 👤 7. Gestión de Usuarios, Roles y Seguridad
 - **Control de Acceso Basado en Roles (RBAC)**:
@@ -73,6 +84,8 @@ El sistema está construido sobre **Laravel 11**, con una interfaz moderna y res
   - Cambio seguro de contraseña con validación en tiempo real.
   - Personalización de avatar (color de fondo dinámico o subida de imagen de perfil).
   - Zona de peligro para eliminación segura de cuenta con doble confirmación.
+<img width="1910" height="933" alt="image" src="https://github.com/user-attachments/assets/f9af0d46-6a51-42ee-92d7-aa343d561777" />
+<img width="1891" height="942" alt="image" src="https://github.com/user-attachments/assets/bf6f6e29-a82c-45e6-8098-9adb9555c888" />
 
 ---
 
