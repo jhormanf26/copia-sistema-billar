@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Productos;
-use App\Models\Proveedores;
+use App\Models\Producto;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -15,7 +15,7 @@ class ProductosController extends Controller
     {
         $buscar = $request->input('buscar', null);
 
-        $query = Productos::with('proveedor');
+        $query = Producto::with('proveedor');
 
         if ($buscar) {
             $query->where(function ($q) use ($buscar) {
@@ -41,7 +41,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        $proveedores = Proveedores::orderBy('nombre', 'asc')->get();
+        $proveedores = Proveedor::orderBy('nombre', 'asc')->get();
         return view('productos.create', compact('proveedores'));
     }
 
@@ -58,7 +58,7 @@ class ProductosController extends Controller
             'idproveedor' => 'required|exists:proveedores,idproveedor',
         ]);
 
-        Productos::create($validated);
+        Producto::create($validated);
 
         return redirect()->route('productos.index')->with('success', 'Producto agregado correctamente.');
     }
@@ -68,8 +68,8 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        $producto = Productos::findOrFail($id);
-        $proveedores = Proveedores::orderBy('nombre', 'asc')->get();
+        $producto = Producto::findOrFail($id);
+        $proveedores = Proveedor::orderBy('nombre', 'asc')->get();
         return view('productos.edit', compact('producto', 'proveedores'));
     }
 
@@ -78,7 +78,7 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $producto = Productos::findOrFail($id);
+        $producto = Producto::findOrFail($id);
 
         $validated = $request->validate([
             'nombre' => 'required|string|max:100',
@@ -104,13 +104,13 @@ class ProductosController extends Controller
 
     public function topProductos()
     {
-        $topProductos = Productos::orderByDesc('cantidad_vendida')->take(5)->get();
+        $topProductos = Producto::orderByDesc('cantidad_vendida')->take(5)->get();
         return view('welcome', compact('topProductos'));
     }
 
     public function mostrarEnInicio()
     {
-        $productos = Productos::take(5)->get();
+        $productos = Producto::take(5)->get();
         return view('welcome', compact('productos'));
     }
 }

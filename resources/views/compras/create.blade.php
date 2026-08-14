@@ -127,6 +127,7 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 let productosSeleccionados = [];
 
@@ -252,14 +253,25 @@ function agregarProducto(id, nombre) {
     let precioVenta = document.getElementById(`pv_${id}`).value;
 
     if (!cantidad || !precioCompra) {
-        alert("Complete todos los campos");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor, complete todos los campos obligatorios.',
+            confirmButtonColor: '#3085d6'
+        });
         return;
     }
 
     // Verificar si el producto ya existe
     let existe = productosSeleccionados.find(p => p.idproducto == id);
     if (existe) {
-        alert("Este producto ya fue agregado");
+
+        Swal.fire({
+            icon: 'info',
+            title: 'Producto ya agregado',
+            text: 'Este producto ya se encuentra en la lista de la compra.',
+            confirmButtonColor: '#3085d6'
+        });
         return;
     }
 
@@ -272,7 +284,18 @@ function agregarProducto(id, nombre) {
     });
 
     actualizarTabla();
-    alert('Producto agregado correctamente');
+
+    
+    // Notificación Toast o Modal pequeña de éxito
+    Swal.fire({
+        icon: 'success',
+        title: '¡Agregado!',
+        text: 'Producto agregado correctamente a la lista.',
+        timer: 1500,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+    });
 }
 
 // Inicializar tabla vacía

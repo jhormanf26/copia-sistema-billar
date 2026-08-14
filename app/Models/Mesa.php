@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mesas extends Model
+class Mesa extends Model
 {   protected $primaryKey = 'idmesa';
     protected $keyType = 'string';
     protected $table = 'mesas';
@@ -17,13 +17,13 @@ class Mesas extends Model
     ];
  public function ventas()
     {
-        return $this->hasMany(MesasVentas::class, 'idmesa', 'idmesa');
+        return $this->hasMany(MesaVenta::class, 'idmesa', 'idmesa');
     }
 
     // Relación con venta activa (opcional)
     public function ventaActiva()
     {
-        return $this->hasOne(MesasVentas::class, 'idmesa', 'idmesa')->whereNull('fechafin');
+        return $this->hasOne(MesaVenta::class, 'idmesa', 'idmesa')->whereNull('fechafin');
     }
 
 

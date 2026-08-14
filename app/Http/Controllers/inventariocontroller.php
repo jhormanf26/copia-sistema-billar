@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Productos;
-use App\Models\Mesas;
+use App\Models\Producto;
+use App\Models\Mesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Proveedores;
+use App\Models\Proveedor;
 
 class InventarioController extends Controller
 {
@@ -15,14 +15,14 @@ class InventarioController extends Controller
      */
     public function index()
     {
-        $productos = Productos::all();
-        $mesas = Mesas::all();
+        $productos = Producto::all();
+        $mesas = Mesa::all();
         $productosTiempo = DB::table('productos')
             ->select('nombre', 'stock')
             ->where('nombre', 'like', '%tiempo%')
             ->get();
 
-        $proveedoresActivos = Proveedores::count();
+        $proveedoresActivos = Proveedor::count();
         
         // Top 5 productos más vendidos (sin "tiempo")
         $top5Productos = DB::table('mesasventas_productos')

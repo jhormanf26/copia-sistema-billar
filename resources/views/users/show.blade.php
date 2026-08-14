@@ -32,7 +32,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-body box-profile text-center">
                     <!-- Avatar -->
-                    <div class="profile-user-img mb-3">
+                    <div class="profile-user-img mb-3 w-100">
                         <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name . ' ' . ($user->apellidos ?? '')) }}&background=random&size=200&bold=true" 
                              alt="Avatar" 
                              class="img-circle img-bordered-sm"
@@ -236,7 +236,7 @@
     }
 
     .box-profile {
-        background-color: #fff;
+      /*  background-color: #fff;*/
     }
 
     .list-group-item {

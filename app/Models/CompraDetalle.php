@@ -29,6 +29,6 @@ class CompraDetalle extends Model
 
     public function producto()
     {
-        return $this->belongsTo(productos::class, 'idproducto', 'idproducto');
+        return $this->belongsTo(Producto::class, 'idproducto', 'idproducto');
     }
 }

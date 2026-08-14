@@ -211,10 +211,10 @@
                     <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
                         <div>
                             <h5 class="mb-1"><i class="fas fa-key mr-2 text-warning"></i> Contraseña</h5>
-                            <small class="text-muted">
+                         <!--    <small class="text-muted">
                                 Última actualización: 
                                 <strong>{{ auth()->user()->updated_at->diffForHumans() }}</strong>
-                            </small>
+                            </small> -->
                         </div>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#cambiarContraseñaModal">
                             <i class="fas fa-edit mr-2"></i> Cambiar
@@ -722,7 +722,7 @@
                                          alt="Preview" 
                                          class="img-circle shadow"
                                          id="avatarPreview"
-                                         style="width: 150px; height: 150px; border: 4px solid #007bff;">
+                                         style="width: 150px; height: 150px; border: 4px solid #007bff; object-fit: cover;">
                                     <p class="text-muted mt-3">
                                         <small>El avatar se actualiza automáticamente con tu nombre y apellidos</small>
                                     </p>
@@ -761,17 +761,17 @@
                                         </small>
                                     </div>
 
-                                    <button type="submit" class="btn btn-success btn-block">
+                                    <button type="submit" class="btn btn-success btn-block" id="uploadAvatarBtn" disabled>
                                         <i class="fas fa-upload mr-2"></i> Subir Imagen
                                     </button>
                                 </form>
 
                                 @if(auth()->user()->avatar_image)
                                     <div class="mt-3">
-                                        <form action="{{ route('profile.deleteAvatarImage') }}" method="POST" style="display: inline;">
+                                        <form action="{{ route('profile.deleteAvatarImage') }}" method="POST" style="display: inline;" id="deleteAvatarForm">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('¿Eliminar la imagen de avatar?')">
+                                            <button type="button" class="btn btn-danger btn-block" onclick="confirmarEliminarAvatar()">
                                                 <i class="fas fa-trash mr-2"></i> Eliminar Imagen Actual
                                             </button>
                                         </form>
@@ -860,7 +860,7 @@
     }
 
     .box-profile {
-        background-color: #fff;
+     /* background-color: #fff; */
     }
 
     .list-group-item {
@@ -868,6 +868,18 @@
         border-bottom: 1px solid #f0f0f0;
         padding: 0.75rem 0;
         background-color: transparent;
+        color: #333; /* Un negro/gris oscuro más suave para modo claro */
+    }
+    
+    .dark-mode .list-group-item {
+        color: #fff; /* Blanco para modo oscuro */
+        border-bottom-color: #4a5056; /* Borde más sutil en modo oscuro */
+    }
+    .list-group-item.active {
+        color: #333; /* Blanco para modo oscuro */
+    }
+    .list-group-item:hover {
+        color: #333; /* Blanco para modo oscuro */
     }
 
     .list-group-item:last-child {
@@ -934,6 +946,7 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Función para alternar visibilidad de contraseña
     function togglePassword(fieldId) {
@@ -973,7 +986,12 @@
             document.getElementById('eliminarCuentaForm').addEventListener('submit', function(e) {
                 if (!confirmDeleteCheckbox.checked) {
                     e.preventDefault();
-                    alert('Debes confirmar que entiendes las consecuencias de esta acción.');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Confirmación requerida',
+                        text: 'Debes marcar la casilla para confirmar que entiendes las consecuencias de esta acción.',
+                        confirmButtonColor: '#dc3545'
+                    });
                 }
             });
         }
@@ -1016,17 +1034,43 @@
             });
         }
 
-        // Vista previa de imagen subida
-        function previewUploadedImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('uploadPreview').src = e.target.result;
-                    document.querySelector('.custom-file-label').textContent = input.files[0].name;
-                }
-                reader.readAsDataURL(input.files[0]);
+    // Alerta SweetAlert para eliminar Avatar
+    window.confirmarEliminarAvatar = function() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará tu imagen personalizada actual y volverás al avatar por defecto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash"></i> Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteAvatarForm').submit();
             }
+        });
+    };
+
+    // Vista previa de imagen subida expuesta de forma global
+    window.previewUploadedImage = function(input) {
+        const uploadBtn = document.getElementById('uploadAvatarBtn');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('uploadPreview').src = e.target.result;
+                document.querySelector('.custom-file-label').textContent = input.files[0].name;
+            }
+            reader.readAsDataURL(input.files[0]);
+            
+            // Habilitar el botón ya que se seleccionó un archivo
+            if (uploadBtn) uploadBtn.disabled = false;
+        } else {
+            // Deshabilitar el botón si el usuario cancela la selección de archivo
+            if (uploadBtn) uploadBtn.disabled = true;
+            document.querySelector('.custom-file-label').textContent = 'Elige un archivo...';
         }
+    };
 
         // Inicializar tooltips
         if (typeof $ !== 'undefined') {

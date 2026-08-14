@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\proveedores;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
 
@@ -13,11 +13,10 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
-        $proveedores = proveedores::all();
+        $proveedores = Proveedor::all();
          $totalStock = \DB::table('productos')->sum('stock');
 
     // lista de proveedores
-    $proveedores = Proveedores::all();
         return view('proveedores.index', compact('proveedores','totalStock'));
     }
 
@@ -41,14 +40,14 @@ class ProveedoresController extends Controller
             'direccion' => 'required|string|max:255',
         ]);
 
-        proveedores::create($validatedData);
+        Proveedor::create($validatedData);
         return redirect()->route('proveedores.index')->with('success', 'Proveedor creado correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(proveedores $proveedores)
+    public function show(Proveedor $proveedores)
     {
         //
     }
@@ -58,7 +57,7 @@ class ProveedoresController extends Controller
      */
     public function edit($idproveedor)
     {
-        $proveedor = proveedores::findOrFail($idproveedor);
+        $proveedor = Proveedor::findOrFail($idproveedor);
         return view('proveedores.edit', compact('proveedor'));
 
     }
@@ -68,7 +67,7 @@ class ProveedoresController extends Controller
      */
     public function update(Request $request, $idproveedor)
     {
-        $proveedor = proveedores::findOrFail($idproveedor);
+        $proveedor = Proveedor::findOrFail($idproveedor);
         
         $validatedData = $request->validate([
             'nombre' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:100',

@@ -1,0 +1,8 @@
+/* Estilos globales personalizados para Billar Nexus */
+
+/* Prevenir que el avatar de perfil se deforme en el navbar y sidebar */
+.user-image.img-circle, 
+.sidebar .user-panel img.img-circle,
+.img-circle {
+    object-fit: cover;
+}

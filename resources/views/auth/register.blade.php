@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -155,36 +156,44 @@
                         </div>
                     </div>
 
-                    <!-- Password -->
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
                             🔒 Contraseña
                         </label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password"
-                            class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white
-                                focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            placeholder="Mínimo 8 caracteres"
-                            required
-                        />
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white
+                                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent pr-10"
+                                placeholder="Mínimo 8 caracteres"
+                                required
+                            />
+                            <button type="button" onclick="togglePassword('password', 'eye-icon-1')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
+                                <i id="eye-icon-1" class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Confirm Password -->
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-2">
                             🔒 Confirmar contraseña
                         </label>
-                        <input 
-                            type="password" 
-                            id="password_confirmation" 
-                            name="password_confirmation"
-                            class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white
-                                focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            placeholder="Repite tu contraseña"
-                            required
-                        />
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="password_confirmation" 
+                                name="password_confirmation"
+                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white
+                                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent pr-10"
+                                placeholder="Repite tu contraseña"
+                                required
+                            />
+                            <button type="button" onclick="togglePassword('password_confirmation', 'eye-icon-2')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 transition">
+                                <i id="eye-icon-2" class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,6 +232,21 @@
         buttonText.classList.add('hidden');
         buttonLoader.classList.remove('hidden');
     });
+
+    function togglePassword(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(iconId);
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
 </script>
 
 </body>

@@ -89,7 +89,7 @@
                                             Stock Bajo ({{ $producto->stock }} un.)
                                         </span>
                                     @else
-                                        <span class="text-secondary">
+                                        <span style="color: #000 !important;">
                                             {{ $producto->stock }} unidades
                                         </span>
                                     @endif
@@ -100,7 +100,9 @@
                                         <i class="fa fa-lg fa-fw fa-pen"></i>
                                     </a>
 
-                                    <button class="btn btn-xs btn-default text-danger mx-1 shadow" onclick="alert('❌ Este producto NO se puede eliminar');" title="Eliminar">
+                                    <button class="btn btn-xs btn-default text-danger mx-1 shadow" 
+                                            onclick="Swal.fire({icon: 'error', title: 'Acción Restringida', text: 'Este producto NO se puede eliminar porque tiene historial de ventas.', confirmButtonColor: '#d33'})" 
+                                            title="Eliminar">
                                         <i class="fa fa-lg fa-fw fa-trash"></i>
                                     </button>
                                 </td>
@@ -119,6 +121,7 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     console.log('Vista de productos lista 🟢');
 

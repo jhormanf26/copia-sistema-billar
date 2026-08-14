@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompraDetalle;
 use App\Models\Compra;
-use App\Models\productos;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +27,7 @@ class CompraDetallesController extends Controller
     public function create()
     {
         $compras = Compra::with('proveedor')->get();
-        $productos = productos::all();
+        $productos = Producto::all();
         return view('compra_detalles.create', compact('compras', 'productos'));
     }
 
@@ -59,7 +59,7 @@ class CompraDetallesController extends Controller
             ]);
 
             // Actualizar stock
-            productos::where('idproducto', $request->idproducto)
+            Producto::where('idproducto', $request->idproducto)
                 ->increment('stock', $request->cantidad);
 
             // Recalcular total de la compra
@@ -95,7 +95,7 @@ class CompraDetallesController extends Controller
     public function edit(CompraDetalle $compra_detalles)
     {
         $compras = Compra::all();
-        $productos = productos::all();
+        $productos = Producto::all();
         return view('compra_detalles.edit', compact('compra_detalles', 'compras', 'productos'));
     }
 
@@ -116,7 +116,7 @@ class CompraDetallesController extends Controller
 
         try {
             // Revertir stock anterior
-            productos::where('idproducto', $compra_detalles->idproducto)
+            Producto::where('idproducto', $compra_detalles->idproducto)
                 ->decrement('stock', $compra_detalles->cantidad);
 
             $subtotal = $request->cantidad * $request->precio_compra;
@@ -131,7 +131,7 @@ class CompraDetallesController extends Controller
             ]);
 
             // Actualizar stock nuevo
-            productos::where('idproducto', $request->idproducto)
+            Producto::where('idproducto', $request->idproducto)
                 ->increment('stock', $request->cantidad);
 
             // Recalcular total de las compras afectadas
@@ -162,7 +162,7 @@ class CompraDetallesController extends Controller
             $compra_id = $compra_detalles->idcompra;
 
             // Revertir stock
-            productos::where('idproducto', $compra_detalles->idproducto)
+            Producto::where('idproducto', $compra_detalles->idproducto)
                 ->decrement('stock', $compra_detalles->cantidad);
 
             // Eliminar detalle

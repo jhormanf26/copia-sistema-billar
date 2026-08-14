@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Compra;
 use App\Models\CompraDetalle;
-use App\Models\Proveedores;
-use App\Models\productos;
+use App\Models\Proveedor;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,13 +21,13 @@ class ComprasController extends Controller
 
     public function create()
     {
-        $proveedores = Proveedores::where('nombre', '!=', 'Tiempos Mesas')->get();
+        $proveedores = Proveedor::where('nombre', '!=', 'Tiempos Mesas')->get();
         return view('compras.create', compact('proveedores'));
     }
 
     public function getProductosProveedor($id)
     {
-        return productos::where('idproveedor', $id)
+        return Producto::where('idproveedor', $id)
             ->select('idproducto', 'nombre', 'precio', 'stock')
             ->get()
             ->toJson();
@@ -84,7 +84,7 @@ class ComprasController extends Controller
                 ]);
 
                 // Actualizar stock del producto
-                productos::where('idproducto', $item['idproducto'])
+                Producto::where('idproducto', $item['idproducto'])
                     ->increment('stock', $item['cantidad']);
             }
 
@@ -108,7 +108,7 @@ class ComprasController extends Controller
 
     public function edit(Compra $compra)
     {
-        $proveedores = Proveedores::where('nombre', '!=', 'Tiempos Mesas')->get();
+        $proveedores = Proveedor::where('nombre', '!=', 'Tiempos Mesas')->get();
         $compra->load('detalles');
         return view('compras.edit', compact('compra', 'proveedores'));
     }
@@ -139,7 +139,7 @@ class ComprasController extends Controller
 
             // Revertir stock de productos
             foreach ($compra->detalles as $detalle) {
-                productos::where('idproducto', $detalle->idproducto)
+                Producto::where('idproducto', $detalle->idproducto)
                     ->decrement('stock', $detalle->cantidad);
             }
 

@@ -57,6 +57,11 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* Evitar scroll horizontal causado por el translate del hover */
+.productos-container .table-responsive {
+    overflow-x: hidden !important;
+}
+
 .cantidad-input:focus {
     border-color: #667eea !important;
     box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
@@ -64,6 +69,23 @@
 
 .producto-row.oculto {
     display: none;
+}
+
+/* Buscador */
+.input-buscador {
+    /* Mantenemos el fondo original */
+}
+.input-buscador::placeholder {
+    color: white !important;
+    opacity: 0.8;
+}
+.input-buscador::-ms-input-placeholder {
+    color: white !important;
+}
+
+/* Paginación */
+body.dark-mode .pagination .page-link {
+    color: white !important;
 }
 </style>
 
@@ -246,7 +268,7 @@
                                                         <button type="submit" 
                                                                 class="btn btn-sm btn-outline-danger"
                                                                 title="Eliminar cantidad"
-                                                                onclick="return confirm('¿Estás seguro de que deseas eliminar esta cantidad?');">
+                                                                onclick="confirmarEliminacion(event, this)">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
@@ -350,80 +372,80 @@
                         {{-- Buscador mejorado --}}
                         <div class="mb-4">
                             <div class="input-group input-group-lg">
-                                <span class="input-group-text bg-white border-end-0">
-                                    <i class="fas fa-search text-muted"></i>
+                                <span class="input-group-text border-end-0" style="background-color: #343a40; border-color: #343a40;">
+                                    <i class="fas fa-search text-white"></i>
                                 </span>
                                 <input type="text"
-                                       class="form-control border-start-0 buscador-productos-{{ $mesa->idmesa }}"
+                                       class="form-control border-start-0 input-buscador buscador-productos-{{ $mesa->idmesa }}"
                                        placeholder="Buscar producto por nombre..."
-                                       style="box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                       style="background-color: #343a40; border-color: #343a40; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: white;">
                             </div>
-                            <small class="text-muted ms-2">
-                                <span class="resultados-count-{{ $mesa->idmesa }}">{{ count($productos) }}</span> productos encontrados
-                            </small>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <small class="text-muted ms-2">
+                                    <span class="resultados-count-{{ $mesa->idmesa }}">{{ count($productos) }}</span> productos encontrados
+                                </small>
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="text-muted small mb-0">Mostrar:</label>
+                                    <select class="form-select form-select-sm page-size-selector-{{ $mesa->idmesa }}" style="width: auto;">
+                                        <option value="5" selected>5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="1000">Todos</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <form action="{{ route('mesasventas.agregarProductos', $mesa->idmesa) }}" method="POST">
                             @csrf
                             <div class="productos-container productos-container-{{ $mesa->idmesa }}" style="max-height: 500px; overflow-y: auto;">
-                                @php
-                                    $chunks = $productos->chunk(10);
-                                @endphp
-
-                                @foreach($chunks as $index => $chunk)
-                                <div class="productos-grupo mb-4" data-grupo="{{ $index }}">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="badge bg-primary rounded-pill px-3 py-2">
-                                            Productos {{ ($index * 10) + 1 }} - {{ min(($index + 1) * 10, count($productos)) }}
-                                        </span>
-                                        <hr class="flex-grow-1 ms-3">
-                                    </div>
-
-                                    <div class="table-responsive">
-                                        <table class="table table-hover align-middle">
-                                            <thead style="background-color: #e9ecef; position: sticky; top: 0; z-index: 10;">
-                                                <tr>
-                                                    <th class="text-primary fw-semibold">Producto</th>
-                                                    <th class="text-primary fw-semibold text-center">Precio</th>
-                                                    <th class="text-primary fw-semibold text-center">Stock</th>
-                                                    <th class="text-primary fw-semibold text-center" style="width: 150px;">Cantidad</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="productos-tbody">
-                                                @foreach($chunk as $producto)
-                                                <tr class="producto-row bg-white"
-                                                    data-nombre="{{ strtolower($producto->nombre) }}"
-                                                    style="transition: all 0.3s ease;">
-                                                    <td class="fw-medium">
-                                                        <i class="fas fa-box text-muted me-2"></i>
-                                                        {{ $producto->nombre }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
-                                                            ${{ number_format($producto->precio, 0, ',', '.') }}
-                                                        </span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="badge {{ $producto->stock > 10 ? 'bg-info' : 'bg-warning' }} bg-opacity-10 {{ $producto->stock > 10 ? 'text-info' : 'text-warning' }} px-3 py-2">
-                                                            {{ $producto->stock }} unid.
-                                                        </span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="number"
-                                                               name="cantidades[{{ $producto->idproducto }}]"
-                                                               min="0"
-                                                               max="{{ $producto->stock }}"
-                                                               class="form-control form-control-sm text-center cantidad-input"
-                                                               value="0"
-                                                               style="border: 2px solid #dee2e6; border-radius: 8px;">
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead style="background-color: #e9ecef; position: sticky; top: 0; z-index: 10;">
+                                            <tr>
+                                                <th class="text-primary fw-semibold">Producto</th>
+                                                <th class="text-primary fw-semibold text-center">Precio</th>
+                                                <th class="text-primary fw-semibold text-center">Stock</th>
+                                                <th class="text-primary fw-semibold text-center" style="width: 150px;">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="productos-tbody" id="tbody-mesa-{{ $mesa->idmesa }}">
+                                            @foreach($productos as $producto)
+                                            <tr class="producto-row bg-white"
+                                                data-nombre="{{ strtolower($producto->nombre) }}"
+                                                style="display: none;">
+                                                <td class="fw-medium">
+                                                    <i class="fas fa-box text-muted me-2"></i>
+                                                    {{ $producto->nombre }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+                                                        ${{ number_format($producto->precio, 0, ',', '.') }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge {{ $producto->stock > 10 ? 'bg-info' : 'bg-warning' }} bg-opacity-10 {{ $producto->stock > 10 ? 'text-info' : 'text-warning' }} px-3 py-2">
+                                                        {{ $producto->stock }} unid.
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="number"
+                                                            name="cantidades[{{ $producto->idproducto }}]"
+                                                            min="0"
+                                                            max="{{ $producto->stock }}"
+                                                            class="form-control form-control-sm text-center cantidad-input"
+                                                            value="0"
+                                                            style="border: 2px solid #dee2e6; border-radius: 8px;">
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                                @endforeach
+                                <div class="pagination-container d-flex justify-content-center mt-3 mb-2" id="pagination-{{ $mesa->idmesa }}">
+                                    <!-- Pagination will be injected via JS -->
+                                </div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
@@ -453,7 +475,29 @@
 @stop
 
 @section('js')
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Confirmación elegante para eliminar producto
+    function confirmarEliminacion(event, btn) {
+        event.preventDefault();
+        const form = btn.closest('form');
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas eliminar esta cantidad de productos?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+
     // Validación en tiempo real para inputs de cantidad a eliminar
     document.addEventListener('DOMContentLoaded', function() {
         const inputsEliminar = document.querySelectorAll('input[name="cantidad_eliminar"]');
@@ -493,7 +537,12 @@
         });
 
         if (!hayProductos) {
-            alert(' Debes seleccionar al menos un producto con cantidad mayor a 0');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atención',
+                text: 'Debes seleccionar al menos un producto con cantidad mayor a 0',
+                confirmButtonColor: '#764ba2'
+            });
             // Volver a habilitar los inputs para que se puedan editar
             inputs.forEach(input => input.disabled = false);
             return false;
@@ -535,7 +584,12 @@
                 ? data.message
                 : 'Error al finalizar la venta';
 
-            alert(mensaje);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al finalizar',
+                text: mensaje,
+                confirmButtonColor: '#764ba2'
+            });
         }
     })
     .catch(err => console.error('Error en la petición:', err));
@@ -682,20 +736,7 @@ window.addEventListener('load', () => {
     });
 });
 
-// 🔍 Buscador de productos
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.buscador-productos').forEach(function(input) {
-        input.addEventListener('keyup', function() {
-            const filter = this.value.toLowerCase();
-            const table = this.closest('.modal-body').querySelector('tbody');
-            if (!table) return;
-            table.querySelectorAll('tr').forEach(function(row) {
-                const text = row.querySelector('td').textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
-        });
-    });
-});
+
 
 // 🌀 Mantener modales abiertos entre páginas
 $(document).ready(function() {
@@ -762,7 +803,12 @@ function verificarMesa(id, tipo, estado) {
 
     if (!startTime) {
         // Si no hay cronómetro activo
-        alert('⚠️ La mesa está disponible. Inicia el tiempo antes de agregar productos.');
+        Swal.fire({
+            icon: 'info',
+            title: 'Mesa Disponible',
+            text: 'Debes iniciar el tiempo de la mesa antes de poder agregar productos al consumo.',
+            confirmButtonColor: '#667eea'
+        });
         return;
     }
 
@@ -771,31 +817,135 @@ function verificarMesa(id, tipo, estado) {
     modal.show();
 }
 
+// 🔍 Paginación y Búsqueda de productos (Frontend)
 document.addEventListener('DOMContentLoaded', function () {
     @foreach($mesas as $mesa)
-    // Tomamos el input y el contenedor de productos
-    const buscador{{ $mesa->idmesa }} = document.querySelector('.buscador-productos-{{ $mesa->idmesa }}');
-    const productosTbody{{ $mesa->idmesa }} = document.querySelectorAll('.productos-tbody tr.producto-row');
-    const resultadosCount{{ $mesa->idmesa }} = document.querySelector('.resultados-count-{{ $mesa->idmesa }}');
+    (function() {
+        const idmesa = {{ $mesa->idmesa }};
+        const buscador = document.querySelector('.buscador-productos-' + idmesa);
+        const tbody = document.getElementById('tbody-mesa-' + idmesa);
+        const paginationContainer = document.getElementById('pagination-' + idmesa);
+        const resultadosCount = document.querySelector('.resultados-count-' + idmesa);
+        const pageSizeSelector = document.querySelector('.page-size-selector-' + idmesa);
+        
+        if (!tbody || !buscador) return;
 
-    if(buscador{{ $mesa->idmesa }}) {
-        buscador{{ $mesa->idmesa }}.addEventListener('input', function () {
-            const texto = this.value.toLowerCase();
-            let visibles = 0;
+        let rowsPerPage = 5;
 
-            productosTbody{{ $mesa->idmesa }}.forEach(tr => {
-                const nombre = tr.dataset.nombre;
-                if(nombre.includes(texto)) {
-                    tr.style.display = '';
-                    visibles++;
-                } else {
-                    tr.style.display = 'none';
+        // Convert NodeList to Array for easier filtering
+        const allRows = Array.from(tbody.querySelectorAll('tr.producto-row'));
+        let filteredRows = [...allRows];
+        let currentPage = 1;
+
+        function renderTable() {
+            // Hide all rows first
+            allRows.forEach(row => row.style.display = 'none');
+            
+            // Calculate slice
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const rowsToShow = filteredRows.slice(startIndex, endIndex);
+            
+            // Show only rows for current page
+            rowsToShow.forEach(row => {
+                row.style.display = '';
+            });
+            
+            if(resultadosCount) {
+                resultadosCount.textContent = filteredRows.length;
+            }
+            renderPagination();
+        }
+
+        function renderPagination() {
+            if(!paginationContainer) return;
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            
+            if (totalPages <= 1) return; // No need for pagination if 1 page or empty
+
+            const nav = document.createElement('nav');
+            const ul = document.createElement('ul');
+            ul.className = 'pagination mb-0';
+
+            // Prev Button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
+            prevLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
                 }
             });
+            ul.appendChild(prevLi);
 
-            resultadosCount{{ $mesa->idmesa }}.textContent = visibles;
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (totalPages > 7) {
+                    if (i !== 1 && i !== totalPages && Math.abs(currentPage - i) > 1) {
+                         if (i === 2 || i === totalPages - 1) {
+                             const elip = document.createElement('li');
+                             elip.className = 'page-item disabled';
+                             elip.innerHTML = '<span class="page-link">...</span>';
+                             ul.appendChild(elip);
+                         }
+                         continue;
+                    }
+                }
+
+                const li = document.createElement('li');
+                li.className = `page-item ${currentPage === i ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = i;
+                    renderTable();
+                });
+                ul.appendChild(li);
+            }
+
+            // Next Button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
+            nextLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+            ul.appendChild(nextLi);
+
+            nav.appendChild(ul);
+            paginationContainer.appendChild(nav);
+        }
+
+        // Search logic
+        buscador.addEventListener('input', function () {
+            const texto = this.value.toLowerCase().trim();
+            filteredRows = allRows.filter(tr => {
+                const nombre = tr.dataset.nombre;
+                return nombre.includes(texto);
+            });
+            currentPage = 1; // reset to first page on search
+            renderTable();
         });
-    }
+
+        // Page size logic
+        if (pageSizeSelector) {
+            pageSizeSelector.addEventListener('change', function () {
+                rowsPerPage = parseInt(this.value);
+                currentPage = 1; // Reset to page 1 to prevent getting stuck on non-existent pages
+                renderTable();
+            });
+        }
+
+        // Mostrar todo al iniciar
+        renderTable();
+    })();
     @endforeach
 });
 

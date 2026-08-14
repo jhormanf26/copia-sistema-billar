@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: billar-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-prueba}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password_seguro}
+      MYSQL_USER: ${DB_USERNAME:-admin_billar}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password_seguro}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          memory: 128M
+
+volumes:
+  db_data:

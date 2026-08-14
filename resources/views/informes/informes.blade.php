@@ -96,7 +96,7 @@
                                 <label for="proveedor-filtro">Proveedor (Compras)</label>
                                 <select id="proveedor-filtro" class="form-control">
                                     <option value="">Todos</option>
-                                    @foreach(\App\Models\Proveedores::all() as $proveedor)
+                                    @foreach(\App\Models\Proveedor::all() as $proveedor)
                                         <option value="{{ $proveedor->idproveedor }}">{{ $proveedor->nombre }}</option>
                                     @endforeach
                                 </select>
@@ -544,6 +544,7 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
     let chartVentas = null;
@@ -599,7 +600,7 @@
     function mostrarOpcionesFiltros() {
         const tipo = tipoInforme.value;
         if (tipo === 'comparacion') {
-            rowSeleccionMeses.style.display = 'grid';
+            rowSeleccionMeses.style.display = '';
             llenarSelectorMeses();
         } else {
             rowSeleccionMeses.style.display = 'none';
@@ -632,7 +633,12 @@
     function cargarComparacionMeses() {
         const mesesChecked = Array.from(document.querySelectorAll('.checkbox-mes:checked')).map(el => el.value);
         if (mesesChecked.length === 0) {
-            alert('Por favor selecciona al menos un mes');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Selección vacía',
+                text: 'Por favor selecciona al menos un mes para realizar la comparación.',
+                confirmButtonColor: '#17a2b8'
+            });
             return;
         }
 
@@ -717,7 +723,7 @@
                 });
 
                 ocultarTodasSecciones();
-                seccionComparacion.style.display = 'grid';
+                seccionComparacion.style.display = '';
             });
     }
 
@@ -752,7 +758,7 @@
                 cargarMesas(params);
                 break;
             case 'comparacion':
-                rowSeleccionMeses.style.display = 'grid';
+                rowSeleccionMeses.style.display = '';
                 llenarSelectorMeses();
                 break;
             case 'resumen-compras':
@@ -778,7 +784,7 @@
                 document.getElementById('cantidad-transacciones').textContent = data.cantidad_transacciones;
                 document.getElementById('promedio-transaccion').textContent = Number(data.promedio_transaccion).toLocaleString('es-CO', {maximumFractionDigits: 2});
                 document.getElementById('productos-registrados').textContent = data.productos_registrados;
-                seccionResumen.style.display = 'grid';
+                seccionResumen.style.display = '';
             });
     }
 
@@ -830,7 +836,7 @@
                     }
                 });
 
-                seccionVentas.style.display = 'grid';
+                seccionVentas.style.display = '';
             });
     }
 
@@ -847,7 +853,7 @@
                         <td>$${(p.total_vendido / p.cantidad_vendida || 0).toLocaleString('es-CO', {maximumFractionDigits: 2})}</td>
                     </tr>
                 `).join('');
-                seccionProductos.style.display = 'grid';
+                seccionProductos.style.display = '';
             });
     }
 
@@ -888,7 +894,7 @@
                     }
                 });
 
-                seccionMetodos.style.display = 'grid';
+                seccionMetodos.style.display = '';
             });
     }
 
@@ -911,7 +917,7 @@
                     </tr>
                 `).join('');
 
-                seccionMesas.style.display = 'grid';
+                seccionMesas.style.display = '';
             });
     }
 
@@ -935,7 +941,7 @@
                 document.getElementById('cantidad-compras').textContent = data.cantidad_compras;
                 document.getElementById('promedio-compra').textContent = Number(data.promedio_compra).toLocaleString('es-CO', {maximumFractionDigits: 2});
                 document.getElementById('total-productos-comprados').textContent = data.total_productos_comprados;
-                seccionResumenCompras.style.display = 'grid';
+                seccionResumenCompras.style.display = '';
             });
     }
 
@@ -987,7 +993,7 @@
                     }
                 });
 
-                seccionCompras.style.display = 'grid';
+                seccionCompras.style.display = '';
             });
     }
 
@@ -1004,7 +1010,7 @@
                         <td>$${Number(p.precio_promedio).toLocaleString('es-CO', {maximumFractionDigits: 2})}</td>
                     </tr>
                 `).join('');
-                seccionProductosComprados.style.display = 'grid';
+                seccionProductosComprados.style.display = '';
             });
     }
 
@@ -1021,7 +1027,7 @@
                         <td>$${Number(p.promedio_compra).toLocaleString('es-CO', {maximumFractionDigits: 2})}</td>
                     </tr>
                 `).join('');
-                seccionComprasProveedor.style.display = 'grid';
+                seccionComprasProveedor.style.display = '';
             });
     }
 
